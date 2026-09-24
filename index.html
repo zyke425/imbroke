@@ -1,0 +1,262 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#292724">
+  <title>Methods of Proof | Group 3</title>
+  <link rel="stylesheet" href="styles.css">
+  <script src="app.js" defer></script>
+</head>
+<body>
+  <div class="app">
+    <header class="topbar">
+      <div class="brand"><strong>Methods of Proof</strong><span>Group 3</span></div>
+      <div class="top-actions">
+        <button class="icon-btn" id="overviewButton" type="button" title="Show all slides" aria-label="Show all slides">▦</button>
+        <button class="icon-btn" id="fullscreenButton" type="button" title="Fullscreen" aria-label="Fullscreen">⛶</button>
+      </div>
+    </header>
+
+    <main class="viewport">
+      <div class="desk-scene" aria-hidden="true">
+        <div class="desk-note-prop"></div>
+        <div class="desk-ruler"></div>
+        <div class="desk-pencil"></div>
+      </div>
+      <div class="stage" id="stage" role="region" aria-label="Methods of Proof presentation">
+        <section class="slide cover is-active" data-title="Methods of Proof" aria-label="Slide 1: Methods of Proof">
+          <div class="tape" aria-hidden="true"></div><div class="bookmark" aria-hidden="true"></div>
+          <img class="pen" src="assets/pen.png" alt="">
+          <div class="cover-formulas" aria-hidden="true"><span>∀x</span><span>p → q</span><span>∴</span><span>∃n</span><span>√x</span></div>
+          <div class="content"><p class="cover-kicker">MATHEMATICS / GROUP 3</p><h1 class="script">Methods of<br>Proof</h1><svg class="title-stroke" viewBox="0 0 420 26" preserveAspectRatio="none" aria-hidden="true"><path d="M4 17 C110 11 210 14 316 11 S392 13 416 8"/></svg><div class="ticket">Group 3</div></div>
+        </section>
+
+        <section class="slide team" data-title="Our Team" aria-label="Slide 2: Our Team">
+          <div class="content">
+            <h1 class="script">Our Team</h1>
+            <div class="team-carousel" role="group" aria-label="Team member carousel">
+              <div class="team-deck" id="teamDeck">
+                <button class="team-card is-selected" type="button" aria-pressed="true" style="--card-index:0"><span class="team-card-index">01 / GROUP 3</span><span class="team-card-name">John Kenneth Ometer</span><span class="team-card-mark" aria-hidden="true">∴</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:1"><span class="team-card-index">02 / GROUP 3</span><span class="team-card-name">Julianna Anna L. Oite</span><span class="team-card-mark" aria-hidden="true">∃</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:2"><span class="team-card-index">03 / GROUP 3</span><span class="team-card-name">Charles V. Pallones</span><span class="team-card-mark" aria-hidden="true">∀</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:3"><span class="team-card-index">04 / GROUP 3</span><span class="team-card-name">Keziah Mae Partoza</span><span class="team-card-mark" aria-hidden="true">⇒</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:4"><span class="team-card-index">05 / GROUP 3</span><span class="team-card-name">Josh Emmanuel T. Suarez</span><span class="team-card-mark" aria-hidden="true">∑</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:5"><span class="team-card-index">06 / GROUP 3</span><span class="team-card-name">Joelson O. Valdez</span><span class="team-card-mark" aria-hidden="true">√</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:6"><span class="team-card-index">07 / GROUP 3</span><span class="team-card-name">Catherine Jane Monares</span><span class="team-card-mark" aria-hidden="true">⇔</span></button>
+                <button class="team-card" type="button" aria-pressed="false" style="--card-index:7"><span class="team-card-index">08 / GROUP 3</span><span class="team-card-name">Fit Princes V. Panzuelo</span><span class="team-card-mark" aria-hidden="true">∎</span></button>
+              </div>
+              <div class="team-carousel-controls">
+                <button class="team-nav" type="button" data-team-direction="-1" title="Previous team member" aria-label="Previous team member">←</button>
+                <span class="team-position" id="teamPosition" aria-live="polite">01 / 08</span>
+                <button class="team-nav" type="button" data-team-direction="1" title="Next team member" aria-label="Next team member">→</button>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide foundations" data-title="Foundations" aria-label="Slide 3: The Foundations of a Mathematical System">
+          <span class="star star-a" aria-hidden="true"></span><span class="star star-b" aria-hidden="true"></span>
+          <div class="content">
+            <h1 class="script">The Foundations of a Mathematical System</h1>
+            <div class="definition-list">
+              <button class="paper-strip" type="button">A theorem is a statement that can be shown to be true.</button>
+              <button class="paper-strip" type="button">A proof is a sequence of statements that demonstrates that a theorem is true.</button>
+              <button class="paper-strip" type="button">Axioms or postulates are the underlying assumptions about mathematical structures.</button>
+              <button class="paper-strip" type="button">Proofs may include axioms, hypotheses, and previously proved theorems.</button>
+              <button class="paper-strip" type="button">Rules of inference draw conclusions from other assertions and tie a proof together.</button>
+              <button class="paper-strip" type="button">Fallacies are common forms of incorrect reasoning.</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide rules-menu" data-title="Rules of Inference" aria-label="Slide 4: Rules of Inference">
+          <span class="star star-a" aria-hidden="true"></span><span class="star star-b" aria-hidden="true"></span><span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script center">Rules of Inference</h1>
+            <div class="rules-list">
+              <button class="rule-link" type="button" data-go="5">Modus Ponens <span class="arrow">→</span></button>
+              <button class="rule-link" type="button" data-go="6">Simplification <span class="arrow">→</span></button>
+              <button class="rule-link" type="button" data-go="7">Modus Tollens <span class="arrow">→</span></button>
+              <button class="rule-link" type="button" data-go="8">Hypothetical Syllogism <span class="arrow">→</span></button>
+              <button class="rule-link" type="button" data-go="9">Disjunctive Syllogism <span class="arrow">→</span></button>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide rule-page" data-title="Modus Ponens" aria-label="Slide 5: Modus Ponens">
+          <span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Modus Ponens or Law of Detachment</h2>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p</span><span>p → q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">q</div></div>
+              <div class="rule-example"><p>When an implication and its hypothesis are true, its conclusion follows.</p><p class="example-title">Example</p><p>“If it snows today, then we will go skiing.”</p><p>“It is snowing today.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, “We will go skiing.”</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide rule-page" data-title="Simplification" aria-label="Slide 6: Simplification">
+          <span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Simplification</h2>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p ∧ q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">p</div></div>
+              <div class="rule-example"><p>From a statement joined by “and,” either part may be inferred.</p><p class="example-title">Example</p><p>“It is below freezing and raining now.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, “It is below freezing now.”</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide rule-page" data-title="Modus Tollens" aria-label="Slide 7: Modus Tollens">
+          <span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Modus Tollens</h2>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p → q</span><span>¬q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">¬p</div></div>
+              <div class="rule-example"><p>If the promised result does not hold, the hypothesis cannot hold.</p><p class="example-title">Example</p><p>“If an angle is right, then its measure is 90°.”</p><p>“This angle's measure is not 90°.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, the angle is not a right angle.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide rule-page" data-title="Hypothetical Syllogism" aria-label="Slide 8: Hypothetical Syllogism">
+          <span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Hypothetical Syllogism</h2>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p → q</span><span>q → r</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">p → r</div></div>
+              <div class="rule-example"><p>Two implications can be chained through a shared statement.</p><p class="example-title">Example</p><p>“If you study hard, then you will pass the exam.”</p><p>“If you pass the exam, then you will get a good grade.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, if you study hard, you will get a good grade.</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide rule-page" data-title="Disjunctive Syllogism" aria-label="Slide 9: Disjunctive Syllogism">
+          <span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Disjunctive Syllogism</h2>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p ∨ q</span><span>¬p</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">q</div></div>
+              <div class="rule-example"><p>When one of two possibilities is ruled out, the other remains.</p><p class="example-title">Example</p><p>“I will order a pizza or a burger.”</p><p>“I did not order pizza.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, “I ordered a burger.”</div></div>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide fallacies" data-title="Fallacies" aria-label="Slide 10: Fallacies">
+          <span class="star star-c" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Fallacies</h1>
+            <div class="fallacy-list">
+              <details><summary>1. Affirming the Conclusion</summary><p>From p → q and q, it does not follow that p. <span class="counterexample">Let p be false and q true.</span></p></details>
+              <details><summary>2. Denying the Hypothesis</summary><p>From p → q and ¬p, it does not follow that ¬q. <span class="counterexample">Again, p can be false while q is true.</span></p></details>
+              <details><summary>3. Begging the Question</summary><p>Circular reasoning uses the truth of the very statement a proof is trying to establish.</p></details>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide implication" data-title="Proof of an Implication" aria-label="Slide 11: Methods of Proof of an Implication">
+          <div class="bookmark" aria-hidden="true"></div>
+          <div class="content"><h1 class="script">Methods of Proof of an Implication</h1>
+            <div class="implication-layout"><div class="implication-copy">
+              <p>Many mathematical problems take the form <strong>“If p, then q.”</strong> We write this as <strong>p → q</strong>.</p>
+              <p>To prove it directly, assume p is true and show that q follows.</p>
+              <p>When p is false, the implication is true regardless of q. Try the truth values to see the one case that makes p → q false.</p>
+            </div><div class="truth-box"><h2>p → q</h2><div class="truth-switches"><button type="button" data-truth="p" aria-pressed="true">p: True</button><button type="button" data-truth="q" aria-pressed="true">q: True</button></div><div class="truth-result" id="truthResult" aria-live="polite">Implication: True</div></div></div>
+          </div>
+        </section>
+
+        <section class="slide types" data-title="Types of Proof" aria-label="Slide 12: Types of Proof">
+          <div class="content"><h1 class="script center">Types of Proof</h1>
+            <div class="type-grid">
+              <details class="proof-type" open><summary><span class="number">1</span>Trivial Proof</summary><p>If q is true regardless of p, then p → q is true. Example: A ⊆ A ∪ B for any sets A and B.</p></details>
+              <details class="proof-type" open><summary><span class="number">2</span>Vacuous Proof</summary><p>If p is false, p → q is true regardless of q. An impossible hypothesis is enough for a vacuous proof.</p></details>
+              <details class="proof-type" open><summary><span class="number">3</span>Direct Proof</summary><p>Assume p and build a logical chain: p → statement 1 → statement 2 → … → q.</p></details>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide worked" data-title="Direct Proof Example" aria-label="Slide 13: Direct Proof Example">
+          <img class="pen proof-pen" src="assets/pen.png" alt="">
+          <div class="content"><div class="tape-title">Assume x is divisible by 6</div>
+            <div class="worked-grid"><div class="worked-steps">
+              <button class="proof-step selected" type="button" data-explain="For some integer k, by the definition of divisibility." aria-pressed="true">→ x = k × 6</button>
+              <button class="proof-step" type="button" data-explain="Replace 6 with its factorization, 2 × 3." aria-pressed="false">→ x = k × (2 × 3)</button>
+              <button class="proof-step" type="button" data-explain="Use the associative property of multiplication." aria-pressed="false">→ x = (k × 2) × 3</button>
+              <button class="proof-step" type="button" data-explain="Let m = k × 2. Since integers are closed under multiplication, m is an integer." aria-pressed="false">→ x = m × 3</button>
+              <button class="proof-step" type="button" data-explain="Therefore 3 divides x, so x is divisible by 3." aria-pressed="false">→ x is divisible by 3</button>
+            </div><div class="worked-note"><strong>Why this step works</strong><p id="stepExplanation">For some integer k, by the definition of divisibility.</p></div></div>
+          </div>
+        </section>
+
+        <section class="slide blank" data-title="Scratch Space" aria-label="Slide 14: Scratch Space">
+          <img class="pen" src="assets/pen.png" alt=""><span class="star star-c" aria-hidden="true"></span>
+          <div class="scratch-heading"><h1>Scratch Space</h1><p>Try a proof, draw an example, or explain your reasoning.</p></div>
+          <canvas class="doodle" id="doodle" aria-label="Drawing canvas"></canvas><button class="clear-doodle" id="clearDoodle" type="button" title="Clear drawing" aria-label="Clear drawing">×</button>
+        </section>
+
+        <section class="slide challenges" data-title="Challenges" aria-label="Slide 15: Challenges">
+          <span class="star star-a" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Challenges</h1>
+            <div class="challenge-list">
+              <details><summary>1. It is raining and cold. What follows by simplification?</summary><p>It is raining. “It is cold” also follows.</p></details>
+              <details><summary>2. If p → q and ¬q, what can you conclude?</summary><p>¬p, by Modus Tollens.</p></details>
+              <details><summary>3. Is a proof valid if it assumes its own conclusion?</summary><p>No. That is circular reasoning, also called begging the question.</p></details>
+            </div>
+          </div>
+        </section>
+
+        <section class="slide conclusion" data-title="Conclusion" aria-label="Slide 16: Conclusion">
+          <span class="star star-a" aria-hidden="true"></span><span class="star star-b" aria-hidden="true"></span>
+          <div class="content"><h1 class="script">Conclusion</h1>
+            <ul class="conclusion-list">
+              <li>A mathematical proof is a chain of justified statements leading to a conclusion.</li>
+              <li>Rules of inference preserve valid reasoning; fallacies only imitate it.</li>
+              <li>For p → q, choose a proof method that fits the hypothesis and the conclusion.</li>
+            </ul>
+          </div>
+        </section>
+
+        <section class="slide cover thanks" data-title="Thank You" aria-label="Slide 17: Thank You">
+          <div class="tape" aria-hidden="true"></div><div class="bookmark" aria-hidden="true"></div>
+          <div class="math-confetti" aria-hidden="true"></div><img class="pen final-pen" src="assets/pen.png" alt="">
+          <div class="content final-content">
+            <p class="final-kicker">THE FINAL LINE</p>
+            <h1 class="script">Thank You</h1>
+            <p class="final-complete"><span aria-hidden="true">∴</span> Presentation Complete</p>
+            <div class="final-qed"><svg class="qed-writing" viewBox="0 0 320 92" role="img" aria-label="Q.E.D., end of proof"><text x="8" y="66">Q.E.D.</text><path d="M9 79 C65 76 130 80 197 74 S258 76 274 72" /></svg><span class="qed-square" aria-label="End of proof">∎</span></div>
+            <p class="final-joke">Any questions? No proof required. 😄</p>
+            <button class="action-btn replay" type="button" data-go="1" aria-label="Prove It Again, return to slide 1">↺ &nbsp; Prove It Again</button>
+          </div>
+          <aside class="final-sticky">Brain cells<br>may now rest.</aside>
+        </section>
+      </div>
+      <div class="cat-scene" aria-hidden="true">
+        <div class="cat-actor is-sitting" id="pixelCat">
+          <span class="cat-shadow"></span>
+          <svg class="cat-art" viewBox="0 0 32 32" shape-rendering="crispEdges" focusable="false">
+            <g class="cat-pixels">
+              <g class="cat-tail">
+                <path fill="#283b3b" d="M1 13h3v7h2v2h3v3H4v-2H2v-3H1z"/>
+                <path fill="#759186" d="M2 14h1v7h2v2h3v1H5v-2H3v-2H2z"/>
+              </g>
+              <g class="cat-back-leg">
+                <path fill="#283b3b" d="M8 22h6v9H7v-3h1z"/>
+                <path fill="#759186" d="M9 23h4v6H9z"/>
+              </g>
+              <path fill="#283b3b" d="M7 12h18v14H6V17h1z"/>
+              <path fill="#9db1a0" d="M8 13h16v12H8z"/>
+              <path fill="#cbd0b9" d="M14 19h10v6H14z"/>
+              <path fill="#6e897e" d="M9 14h2v6H9zm5-1h2v5h-2zm5 0h2v4h-2z"/>
+              <g class="cat-front-leg">
+                <path fill="#283b3b" d="M20 22h6v6h1v3h-8v-3h1z"/>
+                <path fill="#9db1a0" d="M21 23h4v6h-4z"/>
+                <path fill="#e8e4d2" d="M20 29h6v1h-6z"/>
+              </g>
+              <g class="cat-head">
+                <path fill="#283b3b" d="M20 3h4v4h3V3h4v15h-2v3H19V9h1z"/>
+                <path fill="#9db1a0" d="M21 7h9v11h-2v2h-8V10h1z"/>
+                <path fill="#b67d78" d="M21 4h2v4h-2zm7 0h2v4h-2z"/>
+                <path fill="#cbd0b9" d="M24 15h6v4h-8v-2h2z"/>
+                <g class="cat-eyes" fill="#263c3b"><path d="M22 12h2v2h-2zm6 0h2v2h-2z"/></g>
+                <g class="cat-closed-eyes" fill="#263c3b"><path d="M22 13h2v1h-2zm6 0h2v1h-2z"/></g>
+                <path fill="#ae756f" d="M27 16h2v1h-2z"/>
+                <path fill="#546c65" d="M19 17h4v1h-4zm10 0h3v1h-3z"/>
+              </g>
+            </g>
+          </svg>
+        </div>
+      </div>
+      <div class="cat-bubble" id="catBubble" role="status" aria-live="polite" aria-hidden="true"><span id="catBubbleText"></span></div>
+    </main>
+
+    <footer class="footer"><div class="footer-row"><div class="slide-meta"><span class="slide-count" id="slideCount">01 / 17</span><span class="slide-name" id="slideName">Methods of Proof</span></div><div class="cat-controls"><button class="explain-btn" id="explainButton" type="button" title="Explain the current slide (E)">🐱 Explain This Slide</button><label class="cat-jokes-control" title="Toggle cat jokes"><span>Cat jokes</span><input id="catJokesToggle" type="checkbox" aria-label="Cat jokes" checked><span class="cat-jokes-state" id="catJokesState">On</span></label><label class="cat-jokes-control" title="Toggle narration voice"><span>🔊 Voice</span><input id="catVoiceToggle" type="checkbox" aria-label="Narration voice"><span class="cat-jokes-state" id="catVoiceState">Off</span></label></div><div class="transport"><button class="icon-btn" id="prevButton" type="button" title="Previous slide" aria-label="Previous slide">←</button><button class="icon-btn" id="nextButton" type="button" title="Next slide" aria-label="Next slide">→</button></div></div><div class="progress" role="progressbar" aria-label="Presentation progress" aria-valuemin="1" aria-valuemax="17" aria-valuenow="1" id="progress"><span id="progressFill"></span></div></footer>
+  </div>
+  <div class="overview" id="overview" role="dialog" aria-label="All slides" aria-hidden="true"><div class="overview-head"><h2>All slides</h2><button class="icon-btn" id="closeOverview" type="button" title="Close overview" aria-label="Close overview">×</button></div><div class="thumb-grid" id="thumbGrid"></div></div>
+  <div class="sr-only" id="announcer" aria-live="polite"></div>
+</body>
+</html>
