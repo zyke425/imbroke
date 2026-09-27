@@ -21,10 +21,24 @@ const catActor = document.getElementById('pixelCat');
 const catBubble = document.getElementById('catBubble');
 const catBubbleText = document.getElementById('catBubbleText');
 const catJokesToggle = document.getElementById('catJokesToggle');
-const catJokesState = document.getElementById('catJokesState');
 const explainButton = document.getElementById('explainButton');
 const catVoiceToggle = document.getElementById('catVoiceToggle');
-const catVoiceState = document.getElementById('catVoiceState');
+const narrationPanel = document.getElementById('narrationPanel');
+const narrationText = document.getElementById('narrationText');
+const focusButton = document.getElementById('focusButton');
+function voiceAvailable() { return typeof window.speechSynthesis?.speak === 'function' && typeof window.SpeechSynthesisUtterance === 'function'; }
+function readPreference(key, fallback) {
+  try { const value = localStorage.getItem(key); return value === null ? fallback : value === 'true'; }
+  catch { return fallback; }
+}
+function savePreference(key, value) {
+  try { localStorage.setItem(key, String(value)); } catch { /* Private browsing can block storage. */ }
+}
+let focusMode = readPreference('proof-focus-mode', false);
+catJokesToggle.checked = readPreference('proof-cat-jokes', false);
+focusButton.textContent = `Focus mode: ${focusMode ? 'On' : 'Off'}`;
+focusButton.setAttribute('aria-pressed', String(focusMode));
+function jokesEnabled() { return catJokesToggle.checked && !focusMode; }
 const catObjects = {
   pencil: document.querySelector('.desk-pencil'),
   note: document.querySelector('.desk-note-prop'),
@@ -59,11 +73,7 @@ const drawingNamespace = 'http://www.w3.org/2000/svg';
 let visualExplanation = null;
 const NARRATION_INITIAL_DELAY = 1200;
 const NARRATION_SETTLE_DELAY = 500;
-const NARRATION_TYPE_SPEED = 40;
-const NARRATION_FADE_DURATION = 400;
-const NARRATION_BETWEEN_MESSAGES = 700;
 const NARRATION_VOICE_PAUSE = 1000;
-const NARRATION_FINAL_PAUSE = 1200;
 let standaloneBag = [];
 let conversationBag = [];
 const catStandaloneJokes = [
@@ -81,26 +91,91 @@ const catConversations = [
   ['oh', 'Bakit ka naka Tulala ka', 'Diba Dream Course Moyan diba?']
 ];
 
-// One short, plain-language explanation for every slide. Keys match the visible slide number.
+// Each entry drives the visible caption, focus, reveal, and optional speech together.
 const catNarration = {
-  1: ['Today we are learning how mathematicians show that an idea is true.', 'I can help explain any page when you ask.'],
-  2: ['These are the people in Group 3 who put this presentation together.', 'We will walk through the ideas behind mathematical proofs as a team.'],
-  3: ['A theorem is a claim we can prove. A proof is the reasoning that shows why it is true.', 'Axioms are starting assumptions, and rules of inference connect the steps.'],
-  4: ['Rules of inference are reliable patterns for moving from facts we know to a new conclusion.', 'The next pages show five common patterns.'],
-  5: ['If one fact guarantees another, and the first fact happens, the second follows.', 'If snow means skiing and it is snowing, we can conclude that we will go skiing.'],
-  6: ['When two things are both true, either one is true on its own.', 'So if it is freezing and raining, we can safely say it is freezing.'],
-  7: ['If something would cause a result, but that result did not happen, the original condition cannot be true.', 'An angle that is not ninety degrees cannot be a right angle.'],
-  8: ['Think of this as linking two if-then statements.', 'If studying leads to passing, and passing leads to a good grade, studying leads to a good grade.'],
-  9: ['There are two possibilities here. If one is ruled out, the other is left.', 'If the order was pizza or a burger, and it was not pizza, it must have been a burger.'],
-  10: ['A fallacy is reasoning that looks convincing but does not actually prove the claim.', 'Getting a result does not always tell us its cause, and a proof cannot assume its own answer.'],
-  11: ['To prove an if-then claim directly, start by assuming the if part and work toward the then part.', 'The claim only fails when the first part is true and the second part is false.'],
-  12: ['These are three ways to show an if-then claim holds.', 'The result may always be true, the starting condition may be impossible, or we can build a direct chain of reasoning.'],
-  13: ['We start with a number divisible by six, so it is six times some integer.', 'Since six contains a factor of three, that number must also be divisible by three.'],
-  14: ['This is your space to try a proof or draw an example.', 'Start with what you know, then justify each step toward your conclusion.'],
-  15: ['Try the questions before opening the answers.', 'Use simplification for an and statement, modus tollens when a result fails, and avoid circular reasoning.'],
-  16: ['A good proof is a chain where every step has a reason.', 'Choose a method that fits the claim, and check that no step relies on a fallacy.'],
-  17: ['That is the end of our proof journey. Thanks for listening!', 'If you have a question, we can go back to any slide and explain it again.']
+  cover: [
+    {text:'Today we will test whether each step in an argument really follows.', focus:'.learning-goals'},
+    {text:'Predict one thing a proof needs besides a true answer. We will look for justified steps.', focus:'.learning-goals'}],
+  team: [{text:'These are the eight members of Group 3. Choose All members to see every name together.', focus:'.team-deck'}],
+  foundations: [
+    {text:'Start with the claim and its accepted assumptions. An axiom is a general starting point; a hypothesis belongs to this claim.', focus:'[data-focus="start"]'},
+    {text:'A proof justifies each move with a definition, known result, or valid inference rule.', focus:'[data-focus="steps"]'},
+    {text:'The conclusion is the claim we establish. A theorem is a claim that has a proof.', focus:'[data-focus="result"]'}],
+  symbols: [
+    {text:'A proposition has a truth value. The letters p, q, and r stand for whole statements.', focus:'.lesson-lead'},
+    {text:'Read not p, p and q, p or q, p implies q, and therefore q. Logical or allows either or both.', focus:'.symbol-grid'},
+    {text:'In p implies q, p is the hypothesis and q is the conclusion. The converse and a cause do not follow automatically.', focus:'.implication-labels'}],
+  rules: [{text:'Each rule starts with premises and gives a conclusion that must follow if those premises hold.', focus:'.rules-list'}, {text:'Choose a rule to inspect its form and an assumed example.', focus:'.rules-list'}],
+  'modus-ponens': [
+    {text:'Here p means it snows today and q means we go skiing. The given premises are p and p implies q.', focus:'.premise'},
+    {text:'If both premises hold, p triggers the conditional. Predict the conclusion before revealing it.', focus:'.rule-example'},
+    {text:'Therefore q: we go skiing, under the assumed premises.', focus:'.answer', reveal:'rule'}],
+  simplification: [
+    {text:'Here p is below freezing and q is raining. The premise p and q says both are true.', focus:'.premise'},
+    {text:'Can we conclude p, q, or both separately? Think before the reveal.', focus:'.rule-example'},
+    {text:'Either conjunct follows separately. We can state p and we can state q.', focus:'.answer', reveal:'rule'}],
+  'modus-tollens': [
+    {text:'Here p means the angle is right and q means its measure is ninety degrees. The premises are p implies q and not q.', focus:'.premise'},
+    {text:'If p were true, q would have to be true. But q is false. Predict what follows.', focus:'.rule-example'},
+    {text:'Therefore not p: the angle is not right.', focus:'.answer', reveal:'rule'}],
+  'hypothetical-syllogism': [
+    {text:'The premises are p implies q and q implies r. The middle statement q links the two.', focus:'.premise'},
+    {text:'Predict the conditional from p to r. The studying example is only an assumed premise.', focus:'.rule-example'},
+    {text:'Therefore p implies r. This is a logical chain, not a real world grade guarantee.', focus:'.answer', reveal:'rule'}],
+  'disjunctive-syllogism': [
+    {text:'The or premise says at least one option holds. Here p is pizza and q is burger.', focus:'.premise'},
+    {text:'The second premise rules out pizza. Which option remains?', focus:'.rule-example'},
+    {text:'Burger remains, so q follows from the assumed premises.', focus:'.answer', reveal:'rule'}],
+  'building-proof': [
+    {text:'The given premises all concern the same shape: square, rectangle, and four sides.', focus:'.given'},
+    {text:'What follows from p implies q and q implies r? Predict the new conditional.', focus:'.argument-lines'},
+    {text:'Hypothetical Syllogism gives p implies r. This is a derived step.', focus:'[data-build-step]:nth-of-type(4)', buildCount:1},
+    {text:'Now use the given p. Modus Ponens gives r: this shape has four sides.', focus:'[data-build-step]:nth-of-type(5)', buildCount:2}],
+  fallacies: [
+    {text:'Modus Ponens needs p. Affirming the consequent uses q instead and wrongly concludes p.', focus:'.fallacy-list details:nth-child(1)', fallacy:0},
+    {text:'A sprinkler can make the road wet without rain. With p false and q true, both premises of that bad argument hold but p is false.', focus:'.fallacy-list details:nth-child(1)', fallacy:0},
+    {text:'Denying the antecedent also fails in the no rain, wet road case. The sprinkler leaves q true.', focus:'.fallacy-list details:nth-child(2)', fallacy:1},
+    {text:'Circular reasoning only restates the claim. It supplies no independent support.', focus:'.fallacy-list details:nth-child(3)', fallacy:2}],
+  implication: [
+    {text:'Read p implies q as if p, then q. Toggle the truth values to examine one case at a time.', focus:'.truth-switches'},
+    {text:'When p is true and q is false, the conditional fails. That is its only false row.', focus:'.truth-box', truthCase:[true,false]},
+    {text:'When p is false, no requirement is violated in that case. This does not prove q true or prove a statement about every integer.', focus:'.implication-copy', truthCase:[false,false]}],
+  'proof-types': [
+    {text:'These are three introductory approaches for implications over the integers.', focus:'.lesson-lead'},
+    {text:'Trivial is a technical name: establish the conclusion independently. An integer square is nonnegative.', focus:'.proof-type:nth-child(1)', type:0},
+    {text:'Vacuous means the hypothesis cannot hold in this domain. No integer has a negative square.', focus:'.proof-type:nth-child(2)', type:1},
+    {text:'Direct means assume the hypothesis and justify steps until the conclusion follows.', focus:'.proof-type:nth-child(3)', type:2}],
+  'direct-proof': [
+    {text:'Our goal is to show three divides x. Assume six divides x, with x any integer.', focus:'.proof-goal', proofCount:0},
+    {text:'By the definition of divides, x equals six k for some integer k.', focus:'.proof-step:nth-child(1)', proofCount:1},
+    {text:'Factor six into two times three. This is an equality, not a new assumption.', focus:'.proof-step:nth-child(2)', proofCount:2},
+    {text:'Regroup to write x as three times two k.', focus:'.proof-step:nth-child(3)', proofCount:3},
+    {text:'Because k is an integer, two k is an integer. Call it m.', focus:'.proof-step:nth-child(4)', proofCount:4},
+    {text:'Now x equals three m for an integer m, so three divides x. This covers zero and negative integers too.', focus:'.proof-step:nth-child(5)', proofCount:5}],
+  practice: [
+    {text:'Try the parallel claim: four divides n implies two divides n, for every integer n.', focus:'.lesson-lead'},
+    {text:'Write your reasoning or draw on the paper. Use the hint only if needed.', focus:'.practice-actions'},
+    {text:'When ready, choose Show solution and compare the reason for each step.', focus:'.practice-actions'}],
+  challenges: [{text:'First identify a valid rule. The next question asks whether an inference is invalid.', focus:'.challenge-question:nth-child(1)'}, {text:'The final question needs the integer reason that completes a divisibility proof. Check only after choosing an answer.', focus:'.challenge-question:nth-child(3)'}],
+  conclusion: [{text:'State the claim and identify its assumptions first.', focus:'.conclusion-list li:nth-child(1)'}, {text:'Justify each step with a valid reason and reach the result.', focus:'.conclusion-list li:nth-child(2)'}, {text:'Then check that the argument covers every case the claim requires.', focus:'.conclusion-list li:nth-child(3)'}],
+  thanks: [{text:'That completes our lesson. Questions are welcome; we can revisit any step.', focus:'.final-content'}]
 };
+let lessonStepIndex = 0;
+let autoPlayback = false;
+let autoPlaybackTimer = 0;
+let lessonSpeakToken = 0;
+for (const [id, second] of Object.entries({
+  'modus-ponens':'The second given premise is p implies q. Together with p, it supports q.',
+  'modus-tollens':'The second given premise is not q. That rules out p under the conditional.',
+  'hypothetical-syllogism':'The second given premise is q implies r. The q in the middle links both conditionals.',
+  'disjunctive-syllogism':'The second given premise is not p. It removes one option from p or q.'
+})) {
+  catNarration[id][0].focus='.premise span:first-child';
+  catNarration[id].splice(1,0,{text:second,focus:'.premise span:nth-child(2)'});
+}
+catNarration.simplification[0].focus='.premise span:first-child';
+function currentLesson(){return catNarration[slides[current].dataset.id] || []}
+
 
 function shuffledBag(items) {
   const bag = items.map((_, index) => index);
@@ -129,22 +204,9 @@ function bubbleOverlapsContent(rect) {
 }
 
 function positionCatBubble() {
-  if ((!catNarrationActive && !catJokesToggle.checked) || document.hidden || stage.classList.contains('is-flipping') || overview.classList.contains('open')) return false;
+  if (catNarrationActive || !jokesEnabled() || document.hidden || stage.classList.contains('is-flipping') || overview.open) return false;
   const area = catViewport.getBoundingClientRect();
   const cat = catActor.getBoundingClientRect();
-  if (catNarrationActive) {
-    catBubble.style.maxWidth = `${Math.min(280, area.width - 20)}px`;
-    const width = catBubble.offsetWidth;
-    const height = catBubble.offsetHeight;
-    const center = cat.left + cat.width / 2 - area.left;
-    const x = Math.max(6, Math.min(center - width / 2, area.width - width - 6));
-    const y = Math.max(5, Math.min(cat.top - area.top - height - 10, area.height - height - 5));
-    catBubble.style.left = `${x}px`;
-    catBubble.style.top = `${y}px`;
-    catBubble.style.setProperty('--bubble-tail-x', `${Math.max(8, Math.min(center - x - 4, width - 18))}px`);
-    catBubble.classList.remove('is-below');
-    return true;
-  }
   const paper = slides[current].querySelector('.paper').getBoundingClientRect();
   const mobile = matchMedia('(max-width:700px) and (orientation:portrait)').matches;
   const center = cat.left + cat.width / 2 - area.left;
@@ -201,14 +263,14 @@ function clearBubbleTracking() {
 }
 
 async function showCatJokeLine(line, token) {
-  if (token !== catJokeToken || catNarrationActive || !catJokesToggle.checked) return;
+  if (token !== catJokeToken || catNarrationActive || !jokesEnabled()) return;
   catBubbleText.textContent = line;
   catBubbleActive = true;
   clearBubbleTracking();
   const trackToken = ++catBubbleTrackToken;
   catBubbleFrame = requestAnimationFrame(() => trackCatBubble(trackToken));
   let remaining = Math.min(5000, 2600 + line.length * 38);
-  while (remaining > 0 && token === catJokeToken && !catNarrationActive && catJokesToggle.checked) {
+  while (remaining > 0 && token === catJokeToken && !catNarrationActive && jokesEnabled()) {
     await catPause(100);
     if (catBubbleVisible) remaining -= 100;
   }
@@ -218,7 +280,7 @@ async function showCatJokeLine(line, token) {
 }
 
 async function runCatJokeSequence(lines) {
-  if (catJokeInProgress || catNarrationActive || !catJokesToggle.checked) return;
+  if (catJokeInProgress || catNarrationActive || !jokesEnabled()) return;
   const token = catJokeToken;
   catJokeInProgress = true;
   for (const [index, line] of lines.entries()) {
@@ -233,9 +295,11 @@ async function runCatJokeSequence(lines) {
 
 function scheduleCatJoke(initial = false) {
   clearTimeout(catJokeTimer);
-  if (catNarrationActive || !catJokesToggle.checked || document.hidden || overview.classList.contains('open')) return;
+  // Jokes are offered only when the presenter chooses a break in the menu.
+  return;
+  if (catNarrationActive || !jokesEnabled() || document.hidden || overview.open) return;
   catJokeTimer = setTimeout(() => {
-    if (catNarrationActive || !catJokesToggle.checked || document.hidden || overview.classList.contains('open')) return;
+    if (catNarrationActive || !jokesEnabled() || document.hidden || overview.open) return;
     if (!standaloneBag.length) standaloneBag = shuffledBag(catStandaloneJokes);
     if (!conversationBag.length) conversationBag = shuffledBag(catConversations);
     const conversation = Math.random() < .3;
@@ -411,7 +475,7 @@ function startCat() {
   catActor.style.transform = `translate3d(${catPosition.x}px,${catPosition.y}px,0)`;
   catActor.dataset.safeWalk = 'false';
   setCatPose('sitting');
-  if (!reducedMotion.matches && !document.hidden) runCatRoute(token);
+  if (!reducedMotion.matches && !focusMode && !catNarrationActive && !document.hidden) runCatRoute(token);
 }
 
 function updateExplainButton() {
@@ -599,143 +663,64 @@ function showRuleConclusion(slide) {
 }
 
 async function showTruthCases(slide, token) {
-  const box = slide.querySelector('.truth-box');
-  const table = document.createElement('table');
-  table.className = 'truth-walkthrough explain-extra';
-  table.innerHTML = '<caption>→ means “if P, then Q”</caption><thead><tr><th>P</th><th>Q</th><th>P → Q</th></tr></thead><tbody><tr><td>True</td><td>True</td><td>True</td></tr><tr class="critical"><td>True</td><td>False</td><td>False</td></tr><tr><td>False</td><td>True</td><td>True</td></tr><tr><td>False</td><td>False</td><td>True</td></tr></tbody>';
-  box.appendChild(table);
-  table.scrollIntoView({ block: 'nearest' });
-  for (const row of table.tBodies[0].rows) {
-    if (token !== catNarrationToken) return;
-    row.classList.add('is-revealed');
-    if (!await waitForNarration(row.classList.contains('critical') ? 1100 : 650)) return;
-  }
+  const table = slide.querySelector('#truthTable');
+  table.hidden = false;
+  document.getElementById('truthTableButton').setAttribute('aria-expanded', 'true');
+  document.getElementById('truthTableButton').textContent = 'Hide truth table';
+  updateTruthTable();
 }
 
-async function runVisualSequence(slideNumber, messageIndex, token) {
-  const slide = slides[slideNumber - 1];
-  if (token !== catNarrationToken || slide !== slides[current]) return;
-  if ([1, 2, 14, 17].includes(slideNumber)) return;
+function applyLessonStep(index) {
+  const steps=currentLesson();
+  if (!catNarrationActive || !steps.length) return;
+  lessonStepIndex=Math.max(0,Math.min(index,steps.length-1));
+  const step=steps[lessonStepIndex];
+  const slide=slides[current];
+  clearVisualExplanation();
   beginVisualExplanation(slide);
-  const one = selector => slide.querySelector(selector);
-  const many = selector => [...slide.querySelectorAll(selector)];
-
-  if (slideNumber === 3) {
-    const rows = many('.definition-list .paper-strip');
-    if (messageIndex === 0) {
-      focusTeaching([rows[0], rows[1]], rows);
-      drawVisualMark('underline', rows[0]);
-      drawVisualMark('underline', rows[1]);
-    } else {
-      focusTeaching([rows[2], rows[3], rows[4]], rows);
-      drawVisualMark('underline', rows[2]);
-      await showConceptFlow(slide, ['AXIOMS', 'HYPOTHESES', 'LOGIC', 'PROOF', 'THEOREM'], token, 'Fallacies ✕ are wrong turns');
-    }
-  } else if (slideNumber === 4) {
-    if (messageIndex === 0) await showConceptFlow(slide, ['FACTS', 'VALID RULE', 'CONCLUSION'], token);
-    else {
-      const links = many('.rule-link');
-      for (const link of links) {
-        if (token !== catNarrationToken) return;
-        focusTeaching([link], links);
-        clearVisualMarks();
-        drawVisualMark('underline', link);
-        if (!await waitForNarration(480)) return;
-      }
-    }
-  } else if (slideNumber >= 5 && slideNumber <= 9) {
-    const columns = many('.rule-columns > *');
-    if (messageIndex === 0) {
-      const formula = one('.rule-formula');
-      focusTeaching([formula], columns);
-      drawVisualMark('arrow', one('.premise'), one('.conclusion-symbol'));
-      const keys = { 5: '→  if P, then Q', 6: '∧  means AND', 7: '→  if…then   ·   ¬  means NOT', 8: '→  if…then', 9: '∨  means OR   ·   ¬  means NOT' };
-      addExplanationExtra(formula, 'symbol-key', keys[slideNumber]);
-    } else {
-      focusTeaching([one('.rule-example')], columns);
-      showRuleConclusion(slide);
-    }
-  } else if (slideNumber === 10) {
-    const cards = many('.fallacy-list details');
-    focusTeaching([cards[0]], cards);
-    drawVisualMark('underline', cards[0].querySelector('summary'));
-    if (messageIndex === 1) {
-      const demo = addExplanationExtra(one('.content'), 'fallacy-demo');
-      demo.innerHTML = '<span>Rain → wet road</span><span>Wet road does not prove rain.</span><span>No rain does not mean dry road.</span><strong>A sprinkler could explain the water. ✕</strong>';
-      if (!await waitForNarration(900) || token !== catNarrationToken) return;
-      focusTeaching([cards[1]], cards);
-      clearVisualMarks();
-      drawVisualMark('underline', cards[1].querySelector('summary'));
-      if (!await waitForNarration(900) || token !== catNarrationToken) return;
-      focusTeaching([cards[2]], cards);
-      clearVisualMarks();
-      drawVisualMark('underline', cards[2].querySelector('summary'));
-    }
-  } else if (slideNumber === 11) {
-    const halves = many('.implication-layout > *');
-    if (messageIndex === 0) {
-      focusTeaching([halves[0]], halves);
-      drawVisualMark('underline', one('.implication-copy p:nth-child(2)'));
-      await showConceptFlow(slide, ['P: a square', 'Q: four sides'], token);
-    } else {
-      focusTeaching([halves[1]], halves);
-      await showTruthCases(slide, token);
-    }
-  } else if (slideNumber === 12) {
-    const cards = many('.proof-type');
-    if (messageIndex === 0) {
-      focusTeaching(cards, cards);
-      drawVisualMark('underline', one('.script'));
-      addExplanationExtra(one('.content'), 'symbol-key', '→  means if P, then Q');
-    } else {
-      const hints = ['Result already true', 'Starting condition impossible', 'Follow justified steps'];
-      for (const [index, card] of cards.entries()) {
-        if (token !== catNarrationToken) return;
-        focusTeaching([card], cards);
-        clearVisualMarks();
-        drawVisualMark('underline', card.querySelector('summary'));
-        addExplanationExtra(card, 'proof-hint', hints[index]);
-        if (!await waitForNarration(850)) return;
-      }
-    }
-  } else if (slideNumber === 13) {
-    const steps = many('.proof-step');
-    if (messageIndex === 0) {
-      focusTeaching([steps[0], steps[1]], steps);
-      drawVisualMark('underline', steps[0]);
-    } else {
-      for (const [index, step] of steps.entries()) {
-        if (token !== catNarrationToken) return;
-        focusTeaching([step], steps);
-        clearVisualMarks();
-        if (index) drawVisualMark('arrow', steps[index - 1], step);
-        else drawVisualMark('underline', step);
-        if (!await waitForNarration(650)) return;
-      }
-    }
-  } else if (slideNumber === 15) {
-    const cards = many('.challenge-list details');
-    if (messageIndex === 1) {
-      addExplanationExtra(one('.content'), 'symbol-key', '→  if…then   ·   ¬  means NOT');
-      for (const card of cards) {
-        if (token !== catNarrationToken) return;
-        focusTeaching([card], cards);
-        clearVisualMarks();
-        drawVisualMark('underline', card.querySelector('summary'));
-        if (!await waitForNarration(850)) return;
-      }
-    }
-  } else if (slideNumber === 16) {
-    const points = many('.conclusion-list li');
-    focusTeaching(messageIndex === 0 ? [points[0]] : [points[1], points[2]], points);
-    drawVisualMark('underline', messageIndex === 0 ? points[0] : points[2]);
-    if (messageIndex === 1) addExplanationExtra(one('.content'), 'symbol-key', '→  means if P, then Q');
+  if (step.proofCount !== undefined) setProofVisible(step.proofCount, true);
+  if (step.buildCount !== undefined) setBuilderVisible(step.buildCount, true);
+  if (step.reveal === 'rule') {
+    const answer=slide.querySelector('.answer'), button=slide.querySelector('[data-reveal]');
+    if (answer && button) { answer.hidden=false; button.textContent='Hide conclusion'; button.setAttribute('aria-expanded','true'); slide.classList.add('conclusion-visible'); }
+  }
+  if (step.fallacy !== undefined) {
+    slide.querySelectorAll('.fallacy-list details').forEach((item,i)=>{item.open=i===step.fallacy});
+  }
+  if (step.type !== undefined) slide.querySelectorAll('.proof-type').forEach((item,i)=>{item.open=i===step.type});
+  if (step.truthCase) {
+    [truth.p,truth.q]=step.truthCase;
+    document.querySelectorAll('[data-truth]').forEach(button=>{const value=truth[button.dataset.truth];button.setAttribute('aria-pressed',String(value));button.textContent=button.dataset.truth+': '+(value?'True':'False')});
+    updateTruthTable();
+    truthTable.hidden=false;
+    document.getElementById('truthTableButton').setAttribute('aria-expanded','true');
+    document.getElementById('truthTableButton').textContent='Hide truth table';
+  }
+  const target=slide.querySelector(step.focus);
+  if (target && !target.hidden) {target.classList.add('teaching-focus'); target.scrollIntoView({block:'nearest',inline:'nearest'});}
+  narrationText.textContent=step.text;
+  document.getElementById('narrationStepCount').textContent=(lessonStepIndex+1)+' / '+steps.length;
+  document.getElementById('previousExplanation').disabled=lessonStepIndex===0;
+  document.getElementById('nextExplanation').disabled=lessonStepIndex===steps.length-1;
+  catBubbleText.textContent=step.text;
+  if (voiceAvailable()) speechSynthesis.cancel();
+  narrationSpeechFinish?.();
+  const token=++lessonSpeakToken;
+  const voice=catVoiceToggle.checked?speakNarrationLine(step.text.replaceAll('→',' implies ').replaceAll('∧',' and ').replaceAll('∨',' or ').replaceAll('¬',' not ').replaceAll('∴',' therefore '),catNarrationToken):Promise.resolve();
+  clearTimeout(autoPlaybackTimer);
+  if(autoPlayback && lessonStepIndex<steps.length-1){
+    Promise.all([voice,new Promise(resolve=>{autoPlaybackTimer=setTimeout(resolve,getReadingDelay(step.text))})]).then(()=>{
+      if(catNarrationActive && token===lessonSpeakToken && autoPlayback) applyLessonStep(lessonStepIndex+1);
+    });
   }
 }
+
 
 function stopCatNarration(completed = false) {
   if (!catNarrationActive) return;
   clearVisualExplanation();
+  clearTimeout(autoPlaybackTimer);
+  lessonSpeakToken++;
   const cat = catActor.getBoundingClientRect();
   const area = catViewport.getBoundingClientRect();
   catPosition = { x: cat.left - area.left, y: cat.top - area.top };
@@ -750,40 +735,34 @@ function stopCatNarration(completed = false) {
   }
   narrationWaits.clear();
   narrationSpeechFinish?.();
-  if ('speechSynthesis' in window) speechSynthesis.cancel();
+  if (voiceAvailable()) speechSynthesis.cancel();
   catBubbleActive = false;
   clearBubbleTracking();
   catBubble.classList.remove('is-narrating', 'is-line-complete');
   catBubbleText.textContent = '';
+  narrationPanel.hidden = true;
+  narrationText.textContent = '';
+  app.classList.remove('has-caption');
   hideCatBubble();
   catSpeechLock = false;
   setCatPose('sitting');
   updateExplainButton();
   const routeToken = ++catRouteToken;
-  if (!reducedMotion.matches && !document.hidden) runCatRoute(routeToken);
+  if (!reducedMotion.matches && !focusMode && !document.hidden) runCatRoute(routeToken);
   scheduleCatJoke();
 }
 
-async function typeNarrationLine(line, token) {
-  catBubbleText.textContent = '';
-  catBubble.classList.remove('is-line-complete');
-  for (const character of line) {
-    if (token !== catNarrationToken) return;
-    catBubbleText.textContent += character;
-    if (!await waitForNarration(reducedMotion.matches ? 1 : NARRATION_TYPE_SPEED)) return;
-  }
-  catBubble.classList.add('is-line-complete');
-}
-
 function speakNarrationLine(line, token) {
-  if (!catVoiceToggle.checked || !('speechSynthesis' in window)) return Promise.resolve();
+  if (!catVoiceToggle.checked || !voiceAvailable()) return Promise.resolve();
   return new Promise(resolve => {
     const utterance = new SpeechSynthesisUtterance(line);
     utterance.rate = 1;
     let finished = false;
+    const fallback = setTimeout(finish, Math.max(9000, getReadingDelay(line) * 2));
     function finish() {
       if (finished) return;
       finished = true;
+      clearTimeout(fallback);
       if (narrationSpeechFinish === finish) narrationSpeechFinish = null;
       resolve();
     }
@@ -797,80 +776,31 @@ function speakNarrationLine(line, token) {
   });
 }
 
-async function startCatNarration() {
-  if (catNarrationActive || busy || document.hidden || overview.classList.contains('open')) return;
-  clearVisualExplanation();
-  const lines = catNarration[current + 1];
-  if (!lines) return;
-  const slide = current;
-  const token = ++catNarrationToken;
-  catNarrationActive = true;
-  lastExplainedSlide = -1;
+function startCatNarration() {
+  if (catNarrationActive || busy || document.hidden || overview.open) return;
+  const steps=currentLesson(); if (!steps.length) return;
+  catNarrationActive=true;
+  lessonStepIndex=0;
+  lastExplainedSlide=-1;
+  narrationPanel.hidden=false;
+  app.classList.add('has-caption');
   cancelCatJokes();
-  catSpeechLock = true;
-  const cat = catActor.getBoundingClientRect();
-  const area = catViewport.getBoundingClientRect();
-  catPosition = { x: cat.left - area.left, y: cat.top - area.top };
+  catSpeechLock=true;
   ++catRouteToken;
-  catActor.style.transition = 'none';
-  catActor.style.transform = `translate3d(${catPosition.x}px,${catPosition.y}px,0)`;
-  catActor.dataset.safeWalk = 'false';
-  setCatPose('sitting');
-  catBubble.classList.add('is-narrating');
+  const transcript=document.getElementById('narrationTranscript');
+  transcript.replaceChildren(...steps.map(step=>{const item=document.createElement('li');item.textContent=step.text;return item}));
   updateExplainButton();
-
-  if (!await waitForNarration(NARRATION_INITIAL_DELAY) || token !== catNarrationToken) return;
-
-  const place = catGeometry();
-  const targetX = Math.abs(catPosition.x - place.left) <= Math.abs(catPosition.x - place.right) ? place.left : place.right;
-  const target = { x: targetX, y: place.bottom };
-  if (!reducedMotion.matches) {
-    if (!await waitForNarration(30) || token !== catNarrationToken) return;
-    catActor.style.setProperty('--cat-facing', target.x >= catPosition.x ? '1' : '-1');
-    setCatPose('walking');
-    catActor.style.transition = 'transform 450ms linear';
-    catActor.style.transform = `translate3d(${target.x}px,${target.y}px,0)`;
-    if (!await waitForNarration(470) || token !== catNarrationToken) return;
-  } else {
-    catActor.style.transform = `translate3d(${target.x}px,${target.y}px,0)`;
-  }
-  catPosition = target;
-  setCatPose('sitting');
-  catActor.style.setProperty('--cat-facing', target.x === place.left ? '1' : '-1');
-  if (!await waitForNarration(NARRATION_SETTLE_DELAY) || token !== catNarrationToken) return;
-
-  for (const [index, line] of lines.entries()) {
-    if (token !== catNarrationToken || slide !== current) return;
-    catBubbleText.textContent = '';
-    catBubbleActive = true;
-    clearBubbleTracking();
-    const trackToken = ++catBubbleTrackToken;
-    trackCatBubble(trackToken);
-    await typeNarrationLine(line, token);
-    if (token !== catNarrationToken || slide !== current) return;
-    const isLast = index === lines.length - 1;
-    const readingDelay = isLast ? Math.min(getReadingDelay(line), 6000) : getReadingDelay(line);
-    const voicePause = catVoiceToggle.checked
-      ? speakNarrationLine(line, token).then(() => token === catNarrationToken ? waitForNarration(NARRATION_VOICE_PAUSE) : false)
-      : Promise.resolve();
-    await Promise.all([waitForNarration(readingDelay), voicePause, runVisualSequence(slide + 1, index, token)]);
-    if (token !== catNarrationToken || slide !== current) return;
-    catBubbleActive = false;
-    clearBubbleTracking();
-    hideCatBubble();
-    if (!await waitForNarration(NARRATION_FADE_DURATION)) return;
-    clearVisualExplanation();
-    if (!await waitForNarration(isLast ? NARRATION_FINAL_PAUSE : NARRATION_BETWEEN_MESSAGES)) return;
-  }
-  stopCatNarration(true);
+  applyLessonStep(0);
 }
 
+
+let catBlinkTimer = 0;
 function scheduleCatBlink() {
-  setTimeout(() => {
-    if (!reducedMotion.matches && !document.hidden) {
-      catActor.classList.add('is-blinking');
-      setTimeout(() => catActor.classList.remove('is-blinking'), 150);
-    }
+  clearTimeout(catBlinkTimer);
+  if (reducedMotion.matches || focusMode || document.hidden) return;
+  catBlinkTimer = setTimeout(() => {
+    catActor.classList.add('is-blinking');
+    setTimeout(() => catActor.classList.remove('is-blinking'), 150);
     scheduleCatBlink();
   }, 2600 + Math.random() * 2800);
 }
@@ -959,6 +889,7 @@ function updateUI() {
   prevButton.disabled = current === 0;
   nextButton.disabled = current === slides.length - 1;
   progress.setAttribute('aria-valuenow', current + 1);
+  progress.setAttribute('aria-valuemax', slides.length);
   progressFill.style.width = `${((current + 1) / slides.length) * 100}%`;
   thumbs.forEach((thumb, index) => thumb.classList.toggle('selected', index === current));
   history.replaceState(null, '', `#${current + 1}`);
@@ -1011,54 +942,126 @@ function goTo(index) {
   if (!reducedMotion.matches) setTimeout(() => next.classList.remove('is-settling'), duration + 280);
 }
 
+let overviewOpener = null;
 function openOverview() {
+  if (overview.open) return;
   stopCatNarration();
   cancelCatJokes();
+  overviewOpener = document.activeElement;
+  closeUtilities();
+  overview.showModal();
   overview.classList.add('open');
-  overview.setAttribute('aria-hidden', 'false');
-  stage.inert = true;
+  app.inert = true;
   thumbs[current].focus();
 }
 
 function closeOverview() {
-  overview.classList.remove('open');
-  overview.setAttribute('aria-hidden', 'true');
-  stage.inert = false;
-  document.getElementById('overviewButton').focus();
-  scheduleCatJoke();
+  if (!overview.open) return;
+  overview.close();
 }
+overview.addEventListener('close', () => {
+  overview.classList.remove('open');
+  app.inert = false;
+  (overviewOpener?.isConnected ? overviewOpener : document.getElementById('overviewButton')).focus();
+  scheduleCatJoke();
+});
 
 prevButton.addEventListener('click', () => goTo(current - 1));
 nextButton.addEventListener('click', () => goTo(current + 1));
 explainButton.addEventListener('click', () => catNarrationActive ? stopCatNarration() : startCatNarration());
+document.getElementById('stopNarration').addEventListener('click', () => stopCatNarration());
+document.getElementById('previousExplanation').addEventListener('click',()=>applyLessonStep(lessonStepIndex-1));
+document.getElementById('nextExplanation').addEventListener('click',()=>applyLessonStep(lessonStepIndex+1));
+document.getElementById('replayExplanation').addEventListener('click',()=>{if(catNarrationActive) applyLessonStep(0); else startCatNarration()});
+document.getElementById('catJokeNow').addEventListener('click',()=>{
+  if(catNarrationActive || !jokesEnabled()) return;
+  cancelCatJokes();
+  if(!standaloneBag.length) standaloneBag=shuffledBag(catStandaloneJokes);
+  runCatJokeSequence([catStandaloneJokes[standaloneBag.pop()]]);
+});
+document.getElementById('autoPlaybackToggle').addEventListener('change',event=>{autoPlayback=event.target.checked;clearTimeout(autoPlaybackTimer);if(autoPlayback&&catNarrationActive)applyLessonStep(lessonStepIndex)});
 catJokesToggle.addEventListener('change', () => {
-  catJokesState.textContent = catJokesToggle.checked ? 'On' : 'Off';
-  if (catJokesToggle.checked) scheduleCatJoke();
+  savePreference('proof-cat-jokes', catJokesToggle.checked);
+  if (jokesEnabled()) scheduleCatJoke();
   else if (!catNarrationActive) cancelCatJokes();
 });
 catVoiceToggle.addEventListener('change', () => {
-  catVoiceState.textContent = catVoiceToggle.checked ? 'On' : 'Off';
   if (!catVoiceToggle.checked) {
     narrationSpeechFinish?.();
-    if ('speechSynthesis' in window) speechSynthesis.cancel();
+    if (voiceAvailable()) speechSynthesis.cancel();
   }
 });
-if (!('speechSynthesis' in window)) {
+if (!voiceAvailable()) {
   catVoiceToggle.disabled = true;
-  catVoiceToggle.closest('label').title = 'Voice is unavailable in this browser';
+  catVoiceToggle.closest('label').title = 'Voice unavailable here; written captions still work';
+  document.getElementById('voiceAvailability').textContent = 'Voice unavailable here; written captions still work.';
 }
 document.getElementById('overviewButton').addEventListener('click', openOverview);
 document.getElementById('closeOverview').addEventListener('click', closeOverview);
-document.getElementById('fullscreenButton').addEventListener('click', () => {
-  if (document.fullscreenElement) document.exitFullscreen();
-  else document.documentElement.requestFullscreen?.();
+document.getElementById('fullscreenButton').addEventListener('click', async () => {
+  try {
+    if (document.fullscreenElement) await document.exitFullscreen();
+    else if (document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen();
+    else announcer.textContent = 'Fullscreen is unavailable in this browser.';
+  } catch { announcer.textContent = 'Fullscreen request was declined. The presentation remains usable in the window.'; }
+});
+const utilitiesButton = document.getElementById('utilitiesButton');
+const utilitiesMenu = document.getElementById('utilitiesMenu');
+function closeUtilities() { utilitiesMenu.hidden = true; utilitiesButton.setAttribute('aria-expanded', 'false'); }
+utilitiesButton.addEventListener('click', () => {
+  utilitiesMenu.hidden = !utilitiesMenu.hidden;
+  utilitiesButton.setAttribute('aria-expanded', String(!utilitiesMenu.hidden));
+  if (!utilitiesMenu.hidden) utilitiesMenu.querySelector('button').focus();
+});
+document.addEventListener('pointerdown', event => { if (!event.target.closest('.utilities')) closeUtilities(); });
+focusButton.addEventListener('click', () => {
+  focusMode = !focusMode;
+  savePreference('proof-focus-mode', focusMode);
+  focusButton.textContent = `Focus mode: ${focusMode ? 'On' : 'Off'}`;
+  focusButton.setAttribute('aria-pressed', String(focusMode));
+  cancelCatJokes();
+  startCat();
+  scheduleCatBlink();
+  scheduleCatJoke();
+});
+const infoDialog = document.getElementById('infoDialog');
+const infoTitle = document.getElementById('infoTitle');
+const infoContent = document.getElementById('infoContent');
+const infoPanels = {
+  symbols: ['Symbol guide', '<dl class="symbol-guide"><dt>p, q, r</dt><dd>Statements that can be true or false.</dd><dt>→</dt><dd>“If … then …”</dd><dt>∧</dt><dd>AND: both statements are true.</dd><dt>∨</dt><dd>OR: at least one is true; both may be true.</dd><dt>¬</dt><dd>NOT: reverses a truth value.</dd><dt>∴</dt><dd>Therefore: marks a conclusion.</dd></dl>'],
+  keyboard: ['Keyboard help', '<dl class="symbol-guide"><dt>→ / Page Down / Space</dt><dd>Next slide</dd><dt>← / Page Up</dt><dd>Previous slide</dd><dt>Home / End</dt><dd>First / last slide</dd><dt>O</dt><dd>All slides overview</dd><dt>E / S</dt><dd>Explain / stop explanation</dd><dt>F</dt><dd>Fullscreen</dd><dt>?</dt><dd>This help</dd><dt>Escape</dt><dd>Close a panel or stop explanation</dd></dl>']
+};
+utilitiesMenu.querySelectorAll('[data-panel]').forEach(button => button.addEventListener('click', () => {
+  const [title, content] = infoPanels[button.dataset.panel];
+  infoTitle.textContent = title;
+  infoContent.innerHTML = content;
+  closeUtilities();
+  infoDialog.showModal();
+}));
+document.getElementById('closeInfo').addEventListener('click', () => infoDialog.close());
+infoDialog.addEventListener('close', () => utilitiesButton.focus());
+document.getElementById('printButton').addEventListener('click', () => { closeUtilities(); window.print(); });
+let printDetails = [];
+addEventListener('beforeprint', () => {
+  stopCatNarration();
+  printDetails = [...document.querySelectorAll('.slide details')].map(detail => [detail, detail.open]);
+  printDetails.forEach(([detail]) => { detail.open = true; });
+});
+addEventListener('afterprint', () => {
+  printDetails.forEach(([detail, wasOpen]) => { detail.open = wasOpen; });
+  printDetails = [];
 });
 
 document.addEventListener('keydown', event => {
   if (event.altKey || event.ctrlKey || event.metaKey) return;
   if (event.target.closest('input,select,textarea,[contenteditable]')) return;
-  if (overview.classList.contains('open')) {
-    if (event.key === 'Escape') closeOverview();
+  if (overview.open) {
+    if (event.key === 'Escape') { event.preventDefault(); closeOverview(); }
+    return;
+  }
+  if (infoDialog.open) return;
+  if (!utilitiesMenu.hidden) {
+    if (event.key === 'Escape') { closeUtilities(); utilitiesButton.focus(); }
     return;
   }
   if (['ArrowRight', 'PageDown'].includes(event.key) || (event.key === ' ' && !event.target.closest('button,summary'))) {
@@ -1069,22 +1072,23 @@ document.addEventListener('keydown', event => {
     goTo(current - 1);
   } else if (event.key === 'Home') goTo(0);
   else if (event.key === 'End') goTo(slides.length - 1);
-  else if (event.key.toLowerCase() === 'e') startCatNarration();
+  else if (event.key.toLowerCase() === 'e') { if(catNarrationActive) applyLessonStep(lessonStepIndex+1); else startCatNarration(); }
   else if (catNarrationActive && (event.key.toLowerCase() === 's' || event.key === 'Escape')) stopCatNarration();
   else if (event.key.toLowerCase() === 'o') openOverview();
   else if (event.key.toLowerCase() === 'f') document.getElementById('fullscreenButton').click();
+  else if (event.key === '?') utilitiesMenu.querySelector('[data-panel="keyboard"]').click();
 });
 
-stage.addEventListener('touchstart', event => { swipeStart = event.touches[0].clientX; }, { passive: true });
+stage.addEventListener('touchstart', event => { swipeStart = event.target.closest('canvas') ? null : event.touches[0].clientX; }, { passive: true });
 stage.addEventListener('touchend', event => {
-  if (swipeStart === null || event.target.closest('button,summary,canvas')) return;
+  if (swipeStart === null || event.target.closest('button,summary,canvas')) { swipeStart = null; return; }
   const delta = event.changedTouches[0].clientX - swipeStart;
   if (Math.abs(delta) > 55) goTo(current + (delta < 0 ? 1 : -1));
   swipeStart = null;
 }, { passive: true });
 
 document.querySelectorAll('[data-go]').forEach(button => {
-  button.addEventListener('click', () => goTo(Number(button.dataset.go) - 1));
+  button.addEventListener('click', () => { const target=slides.findIndex(slide=>slide.dataset.id===button.dataset.go); goTo(target >= 0 ? target : Number(button.dataset.go)-1); });
 });
 document.querySelectorAll('[data-reveal]').forEach(button => {
   button.addEventListener('click', () => {
@@ -1093,11 +1097,17 @@ document.querySelectorAll('[data-reveal]').forEach(button => {
     answer.hidden = !open;
     button.setAttribute('aria-expanded', String(open));
     button.textContent = open ? 'Hide conclusion' : 'Show conclusion';
+    button.closest('.rule-page').classList.toggle('conclusion-visible',open);
   });
 });
 teamCards.forEach((card, index) => card.addEventListener('click', () => {
   if (performance.now() >= suppressTeamClickUntil) selectTeam(index);
 }));
+document.getElementById('teamAllButton').addEventListener('click', event => {
+  const all = teamSlide.classList.toggle('all-members');
+  event.currentTarget.setAttribute('aria-pressed', String(all));
+  event.currentTarget.textContent = all ? 'Carousel view' : 'All members';
+});
 teamCarousel.querySelectorAll('[data-team-direction]').forEach(button => {
   button.addEventListener('click', () => {
     if (performance.now() >= suppressTeamClickUntil) selectTeam(selectedTeam + Number(button.dataset.teamDirection));
@@ -1140,75 +1150,139 @@ document.querySelectorAll('.proof-type').forEach(card => {
 
 const truth = { p: true, q: true };
 const truthResult = document.getElementById('truthResult');
+const truthTable = document.getElementById('truthTable');
+function updateTruthTable() {
+  const valid = !truth.p || truth.q;
+  document.getElementById('truthExplanation').textContent = truth.p ? (truth.q ? 'p holds, and the promised q holds too.' : 'p holds but q fails. This is the only false row.') : (truth.q ? 'p does not hold; this case does not violate the conditional. q happens to be true here, but the conditional did not prove it.' : 'p does not hold; this case does not violate the conditional. It proves nothing about q in another case.');
+  truthResult.textContent = `Implication: ${valid ? 'True' : 'False'}`;
+  truthResult.classList.toggle('false', !valid);
+  truthTable.querySelectorAll('tbody tr').forEach(row => {
+    row.classList.toggle('is-current', row.dataset.p === String(truth.p) && row.dataset.q === String(truth.q));
+  });
+}
 document.querySelectorAll('[data-truth]').forEach(button => {
   button.addEventListener('click', () => {
     const key = button.dataset.truth;
     truth[key] = !truth[key];
     button.setAttribute('aria-pressed', String(truth[key]));
     button.textContent = `${key}: ${truth[key] ? 'True' : 'False'}`;
-    const valid = !truth.p || truth.q;
-    truthResult.textContent = `Implication: ${valid ? 'True' : 'False'}`;
-    truthResult.classList.toggle('false', !valid);
+    updateTruthTable();
   });
 });
+document.getElementById('truthTableButton').addEventListener('click', event => {
+  truthTable.hidden = !truthTable.hidden;
+  event.currentTarget.setAttribute('aria-expanded', String(!truthTable.hidden));
+  event.currentTarget.textContent = truthTable.hidden ? 'Show truth table' : 'Hide truth table';
+});
+updateTruthTable();
 
-document.querySelectorAll('.proof-step').forEach(button => {
-  button.addEventListener('click', () => {
-    document.querySelectorAll('.proof-step').forEach(step => {
-      step.classList.remove('selected');
-      step.setAttribute('aria-pressed', 'false');
-    });
-    button.classList.add('selected');
-    button.setAttribute('aria-pressed', 'true');
-    document.getElementById('stepExplanation').textContent = button.dataset.explain;
-    const workedSlide = button.closest('.worked');
-    workedSlide.classList.toggle('is-proved', button === workedSlide.querySelector('.proof-step:last-child'));
-    if (!reducedMotion.matches) {
-      workedSlide.querySelector('.proof-pen').animate([
-        { transform: 'rotate(-12deg) translate(0, 0)' },
-        { transform: 'rotate(-16deg) translate(-1.2cqw, -.5cqw)', offset: .55 },
-        { transform: 'rotate(-12deg) translate(0, 0)' }
-      ], { duration: 560, easing: 'ease-in-out' });
-    }
+const proofSteps = [...document.querySelectorAll('.proof-step')];
+let visibleProofSteps = 0;
+function setProofVisible(count, fromLesson=false) {
+  if(catNarrationActive && !fromLesson && slides[current].dataset.id==='direct-proof') { const target=Math.max(0,Math.min(count,proofSteps.length)); applyLessonStep(target); return; }
+  visibleProofSteps = Math.max(0, Math.min(count, proofSteps.length));
+  proofSteps.forEach((step, index) => {
+    step.hidden = index >= visibleProofSteps;
+    step.classList.toggle('selected', index === visibleProofSteps - 1);
+    step.setAttribute('aria-pressed', String(index === visibleProofSteps - 1));
   });
+  document.getElementById('stepExplanation').textContent = visibleProofSteps ? proofSteps[visibleProofSteps - 1].dataset.explain : 'Choose Next step to begin the proof.';
+  document.getElementById('stepCount').textContent = `${visibleProofSteps} / ${proofSteps.length} steps`;
+  document.getElementById('previousStep').disabled = visibleProofSteps === 0;
+  document.getElementById('nextStep').disabled = visibleProofSteps === proofSteps.length;
+  document.getElementById('showAllSteps').disabled = visibleProofSteps === proofSteps.length;
+  document.querySelector('.worked').classList.toggle('is-proved', visibleProofSteps === proofSteps.length);
+}
+document.getElementById('previousStep').addEventListener('click', () => setProofVisible(visibleProofSteps - 1));
+document.getElementById('nextStep').addEventListener('click', () => setProofVisible(visibleProofSteps + 1));
+document.getElementById('showAllSteps').addEventListener('click', () => setProofVisible(proofSteps.length));
+proofSteps.forEach((step, index) => step.addEventListener('click', () => setProofVisible(index + 1)));
+setProofVisible(0);
+
+const challengeForm = document.getElementById('challengeForm');
+const challengeAnswers = { q1: ['a', 'Modus Ponens uses p and p implies q to conclude q.'], q2: ['b', 'This affirms the consequent. q may hold for another reason, so p need not hold.'], q3: ['a', 'Two times k is an integer, so n is two times an integer.'] };
+challengeForm.addEventListener('submit', event => {
+  event.preventDefault();
+  let score = 0;
+  for (const [key, [answer, explanation]] of Object.entries(challengeAnswers)) {
+    const selected = challengeForm.querySelector(`input[name="${key}"]:checked`);
+    const feedback = challengeForm.querySelector(`[data-feedback="${key}"]`);
+    const correct = selected?.value === answer;
+    if (correct) score++;
+    feedback.textContent = selected ? `${correct ? 'Correct.' : 'Try again.'} ${explanation}` : 'Choose an answer to see feedback.';
+    feedback.hidden = false;
+    feedback.classList.toggle('incorrect', !correct);
+  }
+  document.getElementById('challengeScore').textContent = `${score} / 3 correct`;
+});
+challengeForm.addEventListener('reset', () => {
+  challengeForm.querySelectorAll('.challenge-feedback').forEach(feedback => { feedback.hidden = true; feedback.textContent = ''; });
+  document.getElementById('challengeScore').textContent = '';
 });
 
 const doodle = document.getElementById('doodle');
 const ink = doodle.getContext('2d');
-let drawing = false;
-function sizeDoodle() {
-  const rect = doodle.getBoundingClientRect();
-  const ratio = devicePixelRatio || 1;
-  doodle.width = Math.round(rect.width * ratio);
-  doodle.height = Math.round(rect.height * ratio);
-  ink.setTransform(ratio, 0, 0, ratio, 0, 0);
-  ink.lineWidth = 2.5;
+const strokes = [];
+let activeStroke = null;
+let activePointer = null;
+const undoDoodle = document.getElementById('undoDoodle');
+const clearDoodle = document.getElementById('clearDoodle');
+function updateDoodleControls() {
+  undoDoodle.disabled = strokes.length === 0;
+  clearDoodle.disabled = strokes.length === 0;
+}
+function drawDoodle() {
+  const width = doodle.clientWidth;
+  const height = doodle.clientHeight;
+  ink.clearRect(0, 0, width, height);
+  ink.lineWidth = 2.8;
   ink.lineCap = 'round';
   ink.lineJoin = 'round';
   ink.strokeStyle = '#1b2630';
+  for (const stroke of strokes) {
+    if (!stroke.length) continue;
+    ink.beginPath();
+    ink.moveTo(stroke[0].x * width, stroke[0].y * height);
+    if (stroke.length === 1) ink.lineTo(stroke[0].x * width + .01, stroke[0].y * height + .01);
+    for (const point of stroke.slice(1)) ink.lineTo(point.x * width, point.y * height);
+    ink.stroke();
+  }
+}
+function sizeDoodle() {
+  const rect = doodle.getBoundingClientRect();
+  if (!rect.width || !rect.height) return;
+  const ratio = window.devicePixelRatio || 1;
+  const width = Math.round(rect.width * ratio);
+  const height = Math.round(rect.height * ratio);
+  if (doodle.width !== width) doodle.width = width;
+  if (doodle.height !== height) doodle.height = height;
+  ink.setTransform(ratio, 0, 0, ratio, 0, 0);
+  drawDoodle();
 }
 function point(event) {
   const rect = doodle.getBoundingClientRect();
-  return { x: event.clientX - rect.left, y: event.clientY - rect.top };
+  return { x: Math.max(0, Math.min(1, (event.clientX - rect.left) / rect.width)), y: Math.max(0, Math.min(1, (event.clientY - rect.top) / rect.height)) };
 }
 doodle.addEventListener('pointerdown', event => {
-  drawing = true;
+  if (activePointer !== null) return;
+  event.preventDefault();
+  activePointer = event.pointerId;
+  activeStroke = [point(event)];
+  strokes.push(activeStroke);
   doodle.setPointerCapture(event.pointerId);
-  const { x, y } = point(event);
-  ink.beginPath();
-  ink.moveTo(x, y);
-  ink.lineTo(x + .01, y + .01);
-  ink.stroke();
+  drawDoodle();
+  updateDoodleControls();
 });
 doodle.addEventListener('pointermove', event => {
-  if (!drawing) return;
-  const { x, y } = point(event);
-  ink.lineTo(x, y);
-  ink.stroke();
+  if (event.pointerId !== activePointer || !activeStroke) return;
+  activeStroke.push(point(event));
+  drawDoodle();
 });
-doodle.addEventListener('pointerup', () => { drawing = false; });
-doodle.addEventListener('pointercancel', () => { drawing = false; });
-document.getElementById('clearDoodle').addEventListener('click', () => ink.clearRect(0, 0, doodle.width, doodle.height));
+doodle.addEventListener('pointerup', event => { if (event.pointerId === activePointer) { activeStroke?.push(point(event)); activeStroke = null; activePointer = null; drawDoodle(); } });
+doodle.addEventListener('pointercancel', event => { if (event.pointerId === activePointer) { activeStroke = null; activePointer = null; drawDoodle(); } });
+undoDoodle.addEventListener('click', () => { strokes.pop(); drawDoodle(); updateDoodleControls(); });
+clearDoodle.addEventListener('click', () => { strokes.length = 0; drawDoodle(); updateDoodleControls(); });
+if ('ResizeObserver' in window) new ResizeObserver(sizeDoodle).observe(doodle);
 addEventListener('resize', sizeDoodle);
 addEventListener('resize', updateTeamStack);
 function refreshPresentationLayout() {
@@ -1234,6 +1308,7 @@ document.addEventListener('fullscreenchange', refreshPresentationLayout);
 reducedMotion.addEventListener('change', () => {
   stopCatNarration();
   startCat();
+  scheduleCatBlink();
 });
 document.addEventListener('visibilitychange', () => {
   if (document.hidden) {
@@ -1242,8 +1317,10 @@ document.addEventListener('visibilitychange', () => {
     catRouteToken++;
     catActor.style.transition = 'none';
     setCatPose('sitting');
+    clearTimeout(catBlinkTimer);
   } else {
     startCat();
+    scheduleCatBlink();
     scheduleCatJoke();
   }
 });
@@ -1273,4 +1350,21 @@ if (slides[current] === finaleSlide) startFinale();
 if (current === 0 && !reducedMotion.matches) {
   app.classList.add('intro');
   setTimeout(() => app.classList.remove('intro'), 1700);
+}
+
+// Presenter controlled derived statements and practice reveals.
+let visibleBuilderSteps=0;
+function setBuilderVisible(count,fromLesson=false){
+  if(catNarrationActive&&!fromLesson&&slides[current].dataset.id==='building-proof'){applyLessonStep(count+1);return}
+  visibleBuilderSteps=Math.max(0,Math.min(count,2));
+  document.querySelectorAll('[data-build-step]').forEach((item,i)=>{item.hidden=i>=visibleBuilderSteps;item.classList.toggle('selected',i===visibleBuilderSteps-1)});
+  document.getElementById('builderCount').textContent=visibleBuilderSteps+' / 2 derived steps';
+  document.getElementById('builderPrevious').disabled=visibleBuilderSteps===0;
+  document.getElementById('builderNext').disabled=visibleBuilderSteps===2;
+}
+setBuilderVisible(0);
+document.getElementById('builderPrevious').addEventListener('click',()=>setBuilderVisible(visibleBuilderSteps-1));
+document.getElementById('builderNext').addEventListener('click',()=>setBuilderVisible(visibleBuilderSteps+1));
+for(const [buttonId,panelId] of [['practiceHintButton','practiceHint'],['practiceSolutionButton','practiceSolution']]){
+  document.getElementById(buttonId).addEventListener('click',event=>{const panel=document.getElementById(panelId);panel.hidden=!panel.hidden;event.currentTarget.setAttribute('aria-expanded',String(!panel.hidden));event.currentTarget.textContent=(panel.hidden?'Show ':'Hide ')+(panelId==='practiceHint'?'hint':'solution')});
 }
