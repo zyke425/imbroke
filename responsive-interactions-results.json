@@ -1,0 +1,827 @@
+[
+  {
+    "size": "320x568",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "360x800",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "390x844",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "412x915",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "568x320",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "800x360",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "844x390",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "915x412",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "768x1024",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "1024x768",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  },
+  {
+    "size": "1366x768",
+    "team": {
+      "names": 8,
+      "lastReachable": true
+    },
+    "rules": [
+      {
+        "n": 6,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 7,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 8,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 9,
+        "answer": true,
+        "reachable": true
+      },
+      {
+        "n": 10,
+        "answer": true,
+        "reachable": true
+      }
+    ],
+    "builder": {
+      "derived": 2,
+      "reachable": true
+    },
+    "fallacies": {
+      "open": 3,
+      "reachable": true
+    },
+    "truth": {
+      "rows": 4,
+      "cases": [
+        "Implication: True",
+        "Implication: False",
+        "Implication: True",
+        "Implication: True"
+      ],
+      "reachable": true
+    },
+    "types": {
+      "reachable": true
+    },
+    "direct": {
+      "steps": 5,
+      "reachable": true
+    },
+    "practice": {
+      "solution": true,
+      "canvasReachable": true,
+      "undo": true
+    },
+    "quiz": {
+      "score": "3 / 3 correct",
+      "reachable": true
+    },
+    "caption": {
+      "step": "2 / 6",
+      "transcript": 6,
+      "copyScroll": false,
+      "panelWide": false
+    },
+    "errors": []
+  }
+]
