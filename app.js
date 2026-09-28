@@ -164,6 +164,10 @@ let lessonStepIndex = 0;
 let autoPlayback = false;
 let autoPlaybackTimer = 0;
 let lessonSpeakToken = 0;
+<<<<<<< HEAD
+=======
+let lessonDetailsSnapshot = [];
+>>>>>>> cf811b3 (Initial project upload)
 for (const [id, second] of Object.entries({
   'modus-ponens':'The second given premise is p implies q. Together with p, it supports q.',
   'modus-tollens':'The second given premise is not q. That rules out p under the conditional.',
@@ -719,6 +723,11 @@ function applyLessonStep(index) {
 function stopCatNarration(completed = false) {
   if (!catNarrationActive) return;
   clearVisualExplanation();
+<<<<<<< HEAD
+=======
+  lessonDetailsSnapshot.forEach(([detail, wasOpen]) => { if (detail.isConnected) detail.open = wasOpen; });
+  lessonDetailsSnapshot = [];
+>>>>>>> cf811b3 (Initial project upload)
   clearTimeout(autoPlaybackTimer);
   lessonSpeakToken++;
   const cat = catActor.getBoundingClientRect();
@@ -780,6 +789,10 @@ function startCatNarration() {
   if (catNarrationActive || busy || document.hidden || overview.open) return;
   const steps=currentLesson(); if (!steps.length) return;
   catNarrationActive=true;
+<<<<<<< HEAD
+=======
+  lessonDetailsSnapshot=[...slides[current].querySelectorAll('.fallacy-list details,.proof-type')].map(detail=>[detail,detail.open]);
+>>>>>>> cf811b3 (Initial project upload)
   lessonStepIndex=0;
   lastExplainedSlide=-1;
   narrationPanel.hidden=false;
@@ -1079,6 +1092,7 @@ document.addEventListener('keydown', event => {
   else if (event.key === '?') utilitiesMenu.querySelector('[data-panel="keyboard"]').click();
 });
 
+<<<<<<< HEAD
 stage.addEventListener('touchstart', event => { swipeStart = event.target.closest('canvas') ? null : event.touches[0].clientX; }, { passive: true });
 stage.addEventListener('touchend', event => {
   if (swipeStart === null || event.target.closest('button,summary,canvas')) { swipeStart = null; return; }
@@ -1086,6 +1100,26 @@ stage.addEventListener('touchend', event => {
   if (Math.abs(delta) > 55) goTo(current + (delta < 0 ? 1 : -1));
   swipeStart = null;
 }, { passive: true });
+=======
+// A slide swipe begins only on the notebook margin. Lesson content keeps its
+// native scroll, selection, drawing, and pinch gestures.
+const touchInteractive = '.content,button,input,textarea,select,label,summary,canvas,[contenteditable],dialog';
+stage.addEventListener('touchstart', event => {
+  if (event.touches.length !== 1 || event.target.closest(touchInteractive)) { swipeStart = null; return; }
+  swipeStart = { x: event.touches[0].clientX, y: event.touches[0].clientY };
+}, { passive: true });
+stage.addEventListener('touchmove', event => {
+  if (event.touches.length > 1) swipeStart = null;
+}, { passive: true });
+stage.addEventListener('touchend', event => {
+  if (!swipeStart || event.target.closest(touchInteractive) || !event.changedTouches.length) { swipeStart = null; return; }
+  const dx = event.changedTouches[0].clientX - swipeStart.x;
+  const dy = event.changedTouches[0].clientY - swipeStart.y;
+  if (Math.abs(dx) > 72 && Math.abs(dx) > Math.abs(dy) * 1.6) goTo(current + (dx < 0 ? 1 : -1));
+  swipeStart = null;
+}, { passive: true });
+stage.addEventListener('touchcancel', () => { swipeStart = null; }, { passive: true });
+>>>>>>> cf811b3 (Initial project upload)
 
 document.querySelectorAll('[data-go]').forEach(button => {
   button.addEventListener('click', () => { const target=slides.findIndex(slide=>slide.dataset.id===button.dataset.go); goTo(target >= 0 ? target : Number(button.dataset.go)-1); });
@@ -1288,6 +1322,11 @@ addEventListener('resize', updateTeamStack);
 function refreshPresentationLayout() {
   clearTimeout(catResizeTimer);
   catResizeTimer = setTimeout(() => {
+<<<<<<< HEAD
+=======
+    sizeDoodle();
+    updateTeamStack();
+>>>>>>> cf811b3 (Initial project upload)
     if (!catNarrationActive) {
       startCat();
       return;
@@ -1301,9 +1340,20 @@ function refreshPresentationLayout() {
     setCatPose('sitting');
     catActor.style.setProperty('--cat-facing', catPosition.x === place.left ? '1' : '-1');
     renderVisualMarks(false);
+<<<<<<< HEAD
   }, 160);
 }
 addEventListener('resize', refreshPresentationLayout);
+=======
+    const selector = currentLesson()[lessonStepIndex]?.focus;
+    const target = selector ? slides[current].querySelector(selector) : null;
+    target?.scrollIntoView({ block: 'nearest', inline: 'nearest' });
+  }, 160);
+}
+addEventListener('resize', refreshPresentationLayout);
+window.visualViewport?.addEventListener('resize', refreshPresentationLayout);
+addEventListener('orientationchange', refreshPresentationLayout);
+>>>>>>> cf811b3 (Initial project upload)
 document.addEventListener('fullscreenchange', refreshPresentationLayout);
 reducedMotion.addEventListener('change', () => {
   stopCatNarration();

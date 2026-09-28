@@ -516,3 +516,149 @@ button:focus-visible,summary:focus-visible{outline:3px solid #d7a45d;outline-off
 .worked .step-equation{font-size:clamp(18px,1.8cqw,23px)}.worked .step-reason{font-size:clamp(14px,1.4cqw,18px)}
 @media print{.practice-actions,.worked-note{display:none!important}}
 @media(max-width:700px) and (orientation:portrait){.challenge-question legend{float:none;width:100%;display:block}.challenge-question label{display:flex;width:100%;min-width:0}.challenge-question input{flex:none}}
+<<<<<<< HEAD
+=======
+.challenge-question legend{float:none;width:100%;display:block}.challenge-choices{display:flex;flex-wrap:wrap;clear:both;gap:4px 12px}.challenge-choices label{display:flex;align-items:center;min-width:0;margin:0}.challenge-choices input{flex:none}
+@media(max-width:700px) and (orientation:portrait){.challenge-choices{display:grid;grid-template-columns:1fr;gap:3px}.challenge-choices label{width:100%;white-space:normal}}
+.truth-box .truth-table{font-size:clamp(14px,1.6cqw,18px)}.truth-box .truth-table th,.truth-box .truth-table td{padding:5px 7px}
+@media(max-width:700px) and (orientation:portrait){.truth-box .truth-table{font-size:14px}}
+.progress span{width:0}
+
+/* The practice tools share one scrollable reading order at every size. */
+.practice .content{bottom:7%;overflow-y:auto;overflow-x:hidden}
+.practice .doodle{position:relative;inset:auto;width:100%;height:120px;min-height:120px;flex:none;margin-top:8px;border:1px dashed #9cae9f;touch-action:pinch-zoom}
+.practice .doodle-controls{position:relative;right:auto;bottom:auto;align-self:flex-end;flex:none;margin:6px 0 2px}
+.practice .reason-label{margin-top:6px}
+.practice textarea{flex:none}
+
+@media screen and (max-width:700px){
+  html,body{width:100%;max-width:100%;overflow-x:hidden}
+  .app,.app.has-caption{height:100dvh;min-height:100svh;grid-template-rows:48px minmax(0,1fr) 132px 68px;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+  .topbar,.footer{padding-inline:10px}
+  .topbar{gap:6px}.brand{min-width:0}.brand span{display:none}.brand strong{font-size:13px}
+  .top-actions,.transport{gap:5px}.icon-btn{width:42px;height:42px;min-width:42px;min-height:42px}
+  .viewport{padding:4px 6px;overflow:hidden}
+  .stage,.app.has-caption .stage{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+  .content,.team .content,.cover .content,.thanks .content.final-content,.implication .content,.types .content,.worked .content,.proof-builder .content,.practice .content{left:15%;right:7%;top:6%;bottom:6%;min-width:0;min-height:0;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;justify-content:flex-start}
+  .content>*{max-width:100%;min-width:0}
+  .cover .content,.thanks .content.final-content{align-items:flex-start}
+  .cover .script{font-size:clamp(39px,12cqw,54px)}.thanks .script{font-size:clamp(39px,11cqw,54px)}
+  .cover .pen,.thanks .final-pen{opacity:.35;pointer-events:none}.thanks .final-sticky{right:8%;bottom:5%;opacity:.75}
+  .script,.rule-page .script,.implication .script,.foundations .script,.symbols-slide .script,.proof-builder .script,.practice .script{font-size:clamp(24px,6.5cqw,30px);line-height:1.1;margin-bottom:12px}
+  .lesson-lead{font-size:16px}.lesson-foot,.lesson-card p,.symbol-grid span,.implication-labels,.rule-page .rule-mapping,.argument-lines small,.argument-lines b,.fallacy-list details p,.fallacies .lesson-foot,.truth-explanation,.proof-goal,.proof-goal small,.practice-reveal,.reason-label,.practice textarea{font-size:15px;line-height:1.35}
+  .foundation-grid,.symbol-grid,.argument-lines{display:grid;grid-template-columns:1fr;gap:7px}
+  .lesson-card,.symbol-grid>div{padding:8px 9px}.lesson-card strong,.symbol-grid strong{font-size:18px}.symbol-grid strong{min-width:60px}
+  .argument-lines>div{grid-template-columns:72px 42px minmax(0,1fr);gap:6px;padding:7px}.argument-lines span{font-size:18px}.argument-lines small{overflow-wrap:anywhere}
+  .rule-columns,.implication-layout,.worked-grid{display:block}.rules-list{width:100%}
+  .rule-page .rule-formula{margin-bottom:10px}.rule-page .rule-example p,.rule-page .answer{font-size:16px}.rule-page .rule-example .example-title{font-size:17px}
+  .fallacy-list details p,.proof-type p,.implication-copy,.conclusion-list li{font-size:16px;line-height:1.35}.fallacy-list summary,.proof-type summary{font-size:18px}
+  .truth-box{margin-top:10px}.truth-switches button{min-height:44px}.truth-box .truth-table{font-size:14px}
+  .proof-controls button,.doodle-controls button,.practice-actions button,.rule-example .action-btn,.challenge-actions button,.rule-link,.team-nav{min-height:44px;font-size:14px}
+  .proof-controls span{font-size:14px}.proof-step{min-height:44px}.worked .step-equation{font-size:18px}.worked .step-reason{font-size:14px}
+  .tape-title{font-size:18px;line-height:1.2;padding:7px 8px}.worked-note,.worked-note p{font-size:15px;line-height:1.32}.worked-note{padding:8px}
+  .team .content{display:block}.team-carousel{display:block}.team-deck{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(68px,auto);gap:8px;min-height:0;padding:4px;flex:none}.team-card{min-width:0;min-height:68px;transform:none!important}.team-card-name{font-size:14px}.team-card-index{font-size:10px}.team-carousel-controls{margin-top:8px}
+  .practice .content{display:flex;flex-direction:column}.practice textarea{min-height:72px;font-size:16px}.practice .doodle{height:170px;min-height:170px;margin-top:10px}.practice .doodle-controls{display:flex;justify-content:flex-end;gap:8px;width:100%}
+  .practice-actions{flex-wrap:wrap}.practice-actions button{flex:1;white-space:nowrap}
+  .challenge-choices{display:grid;grid-template-columns:1fr;gap:1px}.challenge-choices label{min-height:40px;font-size:15px}.challenge-question legend{font-size:17px}.challenge-feedback{font-size:15px}
+  .footer{gap:3px;padding-block:0 4px}.footer-row{min-height:54px;gap:5px}.slide-meta{gap:0}.slide-count{font-size:12px}.explain-btn{min-height:44px;padding:6px 8px;font-size:11px;white-space:normal;line-height:1.1}.progress{flex:none}
+  .narration-panel,.narration-panel[hidden]{width:calc(100% - 12px);height:124px;max-height:none;display:grid;grid-template-columns:1fr;grid-template-rows:minmax(0,1fr) auto auto;gap:2px;margin:0 auto 4px;padding:6px 8px;overflow:visible}
+  .narration-copy{overflow:auto;min-height:0}.narration-copy strong{font-size:12px}.narration-panel p{font-size:14px;line-height:1.25}
+  .narration-controls{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;width:100%}.narration-controls button{min-height:44px;padding:4px;font-size:11px;line-height:1.1;white-space:normal}
+  .transcript{grid-column:1;min-height:17px;font-size:12px}.transcript ol{max-height:min(48dvh,360px);overflow-y:auto;overflow-x:hidden}
+  .utilities-menu{width:min(270px,calc(100vw - 16px));max-height:calc(100dvh - 60px);overflow:auto}
+  .info-dialog{max-height:calc(100dvh - env(safe-area-inset-top) - env(safe-area-inset-bottom) - 16px)}
+}
+
+@media screen and (max-height:500px) and (orientation:landscape){
+  .app,.app.has-caption{height:100dvh;min-height:100svh;grid-template-rows:42px minmax(0,1fr) 76px 50px;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+  .topbar,.footer{padding-inline:max(8px,env(safe-area-inset-left)) max(8px,env(safe-area-inset-right))}
+  .topbar{gap:6px}.brand strong{font-size:13px}.brand span{display:none}.top-actions,.transport{gap:4px}
+  .icon-btn{width:42px;height:42px;min-width:42px;min-height:42px}
+  .viewport{padding:3px 5px}.stage,.app.has-caption .stage{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+  .content,.team .content,.cover .content,.thanks .content.final-content,.implication .content,.types .content,.worked .content,.proof-builder .content,.practice .content{left:12%;right:5%;top:4%;bottom:4%;overflow-x:hidden;overflow-y:auto;overscroll-behavior:contain;touch-action:pan-y pinch-zoom;justify-content:flex-start}
+  .content>*{max-width:100%;min-width:0}
+  .script,.rule-page .script,.implication .script,.foundations .script,.symbols-slide .script,.proof-builder .script,.practice .script{font-size:clamp(23px,3.6vw,28px);margin-bottom:8px;line-height:1.08}
+  .cover .script,.thanks .script{font-size:clamp(34px,7vw,44px);white-space:normal}.cover .content,.thanks .content.final-content{align-items:flex-start}
+  .cover .pen,.thanks .final-pen,.thanks .final-sticky{display:none}
+  .lesson-lead{font-size:16px}.lesson-foot,.lesson-card p,.symbol-grid span,.implication-labels,.rule-page .rule-mapping,.argument-lines small,.argument-lines b,.fallacy-list details p,.fallacies .lesson-foot,.truth-explanation,.proof-goal,.proof-goal small,.practice-reveal,.reason-label,.practice textarea{font-size:15px;line-height:1.32}
+  .foundation-grid,.symbol-grid,.argument-lines{display:grid;grid-template-columns:1fr;gap:6px}.lesson-card,.symbol-grid>div{padding:7px 8px}
+  .argument-lines>div{grid-template-columns:72px 52px minmax(0,1fr);gap:6px;padding:6px}.argument-lines span{font-size:18px}
+  .rule-columns,.implication-layout,.worked-grid{display:block}.rules-list{width:100%}.rule-page h2{font-size:19px}.rule-page .rule-example p,.rule-page .answer{font-size:16px}
+  .fallacy-list details p,.proof-type p,.implication-copy,.conclusion-list li{font-size:16px;line-height:1.3}.fallacy-list summary,.proof-type summary{font-size:18px}
+  .proof-controls button,.doodle-controls button,.practice-actions button,.rule-example .action-btn,.challenge-actions button,.rule-link,.team-nav,.truth-switches button{min-height:44px;font-size:14px}.proof-step{min-height:44px}.worked .step-reason{font-size:14px}
+  .tape-title{font-size:18px;line-height:1.2;padding:7px 8px}.worked-note,.worked-note p{font-size:15px;line-height:1.32}.worked-note{padding:8px}
+  .team .content{display:block}.team-carousel{display:block}.team-deck{grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:none;grid-auto-rows:minmax(64px,auto);min-height:0;flex:none;gap:7px;padding:4px}.team-card{transform:none!important;min-height:64px}.team-card-name{font-size:14px}
+  .practice .content{display:flex;flex-direction:column}.practice textarea{min-height:70px;font-size:16px}.practice .doodle{position:relative;inset:auto;width:100%;height:140px;min-height:140px;flex:none}.practice .doodle-controls{position:relative;right:auto;bottom:auto;align-self:flex-end;margin-top:6px}
+  .challenge-choices{display:flex;flex-wrap:wrap;gap:4px 12px}.challenge-choices label{min-height:40px;font-size:15px}.challenge-question legend{font-size:17px}.challenge-feedback{font-size:15px}
+  .footer{gap:2px;padding-bottom:2px}.footer-row{min-height:44px;gap:5px}.explain-btn{min-height:42px;padding:4px 9px;font-size:11px}.slide-count{font-size:12px}
+  .narration-panel,.narration-panel[hidden]{width:calc(100% - 10px);height:72px;max-height:none;display:grid;grid-template-columns:minmax(0,1fr) auto;grid-template-rows:1fr 16px;gap:0 6px;margin:0 auto 2px;padding:4px 7px;overflow:visible}
+  .narration-copy{grid-column:1;grid-row:1;overflow:auto;min-width:0;min-height:0}.narration-copy strong{font-size:11px}.narration-panel p{font-size:14px;line-height:1.2}
+  .narration-controls{grid-column:2;grid-row:1;display:flex;flex-wrap:nowrap;gap:3px;align-self:center;width:auto}.narration-controls button{width:44px;min-width:44px;min-height:44px;height:44px;padding:0;font-size:0}.narration-controls button::after{font-size:12px;font-weight:700}.narration-controls button:nth-child(1)::after{content:'Prev'}.narration-controls button:nth-child(2)::after{content:'Next'}.narration-controls button:nth-child(3)::after{content:'Replay'}.narration-controls button:nth-child(4)::after{content:'Stop'}
+  .transcript{grid-column:1 / -1;grid-row:2;font-size:12px;min-height:16px}.transcript ol{max-height:60dvh}
+  .cat-actor{width:26px;height:26px}
+  .utilities-menu{max-height:calc(100dvh - 45px);overflow:auto}
+}
+
+@media screen and (min-width:701px) and (max-width:900px) and (orientation:portrait){
+  .app,.app.has-caption{height:100dvh;grid-template-rows:54px minmax(0,1fr) 116px 70px;padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left)}
+  .viewport{padding:8px 12px}.stage,.app.has-caption .stage{width:100%;height:100%;max-width:none;aspect-ratio:auto}
+  .content,.team .content,.cover .content,.thanks .content.final-content{overflow-y:auto;overflow-x:hidden;touch-action:pan-y pinch-zoom}
+}
+
+@media screen and (max-width:700px){
+  .app,.app.has-caption{grid-template-rows:48px minmax(0,1fr) 140px 68px}
+  .icon-btn{width:44px;height:44px;min-width:44px;min-height:44px}
+  .narration-panel,.narration-panel[hidden]{height:132px}
+  .transcript summary{display:flex;align-items:center;min-height:32px;padding:4px 0}
+  .challenge-choices label{min-height:44px}
+  .utilities-menu button,.utilities-menu label{min-height:44px}
+  .info-head button{min-width:44px;min-height:44px}
+}
+
+@media screen and (max-height:500px) and (orientation:landscape){
+  .app,.app.has-caption{grid-template-rows:42px minmax(0,1fr) 68px 50px}
+  .narration-panel,.narration-panel[hidden]{height:64px;grid-template-columns:minmax(0,1fr) auto 44px;grid-template-rows:1fr;gap:0 4px}
+  .narration-copy{grid-column:1;grid-row:1}.narration-controls{grid-column:2;grid-row:1}
+  .transcript{grid-column:3;grid-row:1;align-self:center;min-height:44px}
+  .transcript summary{display:grid;place-items:center;width:44px;height:44px;min-height:44px;padding:0;border:1px solid #a6b6a8;background:#e8eee4;color:#315d55;border-radius:3px;font-size:0;list-style:none;cursor:pointer}
+  .transcript summary::-webkit-details-marker{display:none}.transcript summary::after{content:'Text';font-size:12px;font-weight:700}
+  .transcript ol{left:auto;right:0;bottom:100%;width:min(420px,calc(100vw - 16px));max-height:min(42dvh,150px)}
+}
+
+@media screen and (min-width:701px) and (max-width:1100px){
+  .proof-controls button,.doodle-controls button,.team-nav,.practice-actions button,.rule-example .action-btn,.challenge-actions button{min-height:44px;font-size:14px}
+  .proof-controls span,.argument-lines b,.argument-lines small,.step-reason{font-size:14px}
+  .argument-lines span{font-size:20px}.argument-lines>div{grid-template-columns:92px 64px minmax(0,1fr)}
+  .rule-example p,.rule-page .rule-mapping,.rule-page .rule-reason{font-size:16px}
+}
+
+@media screen and (max-width:700px) and (orientation:portrait){
+  .app,.app.has-caption{grid-template-rows:48px minmax(0,1fr) 168px 68px}
+  .narration-panel,.narration-panel[hidden]{height:160px;grid-template-rows:minmax(68px,1fr) auto auto}
+}
+
+/* Give the notebook the caption space until an explanation is actually open. */
+@media screen and (max-width:700px){
+  .app{grid-template-rows:48px minmax(0,1fr) 68px}
+  .narration-panel[hidden]{display:none}
+}
+@media screen and (max-width:700px) and (orientation:portrait){
+  .app.has-caption{grid-template-rows:48px minmax(0,1fr) 168px 68px}
+}
+@media screen and (max-height:500px) and (orientation:landscape){
+  .app{grid-template-rows:42px minmax(0,1fr) 50px}
+  .app.has-caption{grid-template-rows:42px minmax(0,1fr) 68px 50px}
+  .narration-panel[hidden]{display:none}
+}
+@media screen and (min-width:701px) and (max-width:900px) and (orientation:portrait){
+  .app{grid-template-rows:54px minmax(0,1fr) 70px}
+  .app.has-caption{grid-template-rows:54px minmax(0,1fr) 116px 70px}
+  .narration-panel[hidden]{display:none}
+}
+
+@media print{
+  *,*::before,*::after{animation:none!important;transition:none!important}
+  .leaf{position:absolute!important;inset:0!important;width:100%!important;height:100%!important}
+  .cover .content>*{opacity:1!important;transform:none!important}
+}
+>>>>>>> cf811b3 (Initial project upload)

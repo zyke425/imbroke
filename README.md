@@ -33,7 +33,18 @@ Open `index.html` in a current browser. Keep `index.html`, `styles.css`, `app.js
 - Cat jokes are off in a fresh session; saved preferences are honored. Enable jokes and choose **Tell a short joke** at a presenter chosen break. Jokes are suppressed during explanations.
 - Slides 6–10 reveal rule conclusions. Slide 11 advances derived steps. Slide 12 opens each fallacy separately. Slide 13 toggles p and q and shows all four truth rows. Slide 15 advances the direct proof. Slide 16 reveals hint and solution separately, accepts typed reasoning, and offers drawing Undo/Clear. Slide 17 gives feedback only for answered questions.
 
+<<<<<<< HEAD
 Presenter opened answers and steps remain visible after Stop or slide navigation. Replay restarts the cat at its first step without erasing them. Drawing and typed reasoning remain until the page closes.
+=======
+Presenter opened answers and steps remain visible after Stop or slide navigation. Fallacy and proof-type cards return to their pre-explanation open state when Stop is pressed. The selected truth-table case remains visible. Replay restarts the cat at its first step without erasing answers. Drawing and typed reasoning remain until the page closes.
+
+## Phones and tablets
+
+- Rotate freely between portrait and landscape. The current slide, explanation step, answers, quiz choices and feedback, typed reasoning, and drawing stay in place. Rotation does not reload the page or restart narration.
+- Scroll inside the notebook page to reach long content. The navigation bar stays below the page. On short landscape screens, the caption uses a compact row; tap **Text** to open its scrollable full transcript.
+- Swipe on the notebook margin to change slides. Swiping or scrolling lesson text, drawing, selecting text, and answering questions will not change slides. Pinch zoom remains available. Footer arrows and keyboard controls also work.
+- Browser toolbars and display safe areas are included in the available layout height. For the most readable view, use the browser's normal zoom level and scroll within the notebook when a page is longer than the visible area.
+>>>>>>> cf811b3 (Initial project upload)
 
 ## Print
 
