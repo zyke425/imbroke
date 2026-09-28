@@ -34,7 +34,7 @@ function savePreference(key, value) {
   try { localStorage.setItem(key, String(value)); } catch { /* Private browsing can block storage. */ }
 }
 let focusMode = readPreference('proof-focus-mode', false);
-catJokesToggle.checked = readPreference('proof-cat-jokes', true);
+catJokesToggle.checked = readPreference('proof-cat-jokes', false);
 focusButton.textContent = `Focus mode: ${focusMode ? 'On' : 'Off'}`;
 focusButton.setAttribute('aria-pressed', String(focusMode));
 function jokesEnabled() { return catJokesToggle.checked && !focusMode; }
@@ -44,6 +44,7 @@ const catObjects = {
   ruler: document.querySelector('.desk-ruler')
 };
 let current = 0;
+const catMovementAllowed = () => current <= 1 || current === slides.length - 1;
 let busy = false;
 let swipeStart = null;
 let particleTimer = 0;
@@ -92,22 +93,22 @@ const catConversations = [
 
 // One short, plain-language explanation for every slide. Keys match the visible slide number.
 const catNarration = {
-  1: ['Today we are learning how mathematicians show that an idea is true.', 'I can help explain any page when you ask.'],
+  1: ['Today we will recognize valid reasoning, spot fallacies, and build a direct proof.', 'I can help explain any page when you ask.'],
   2: ['These are the people in Group 3 who put this presentation together.', 'We will walk through the ideas behind mathematical proofs as a team.'],
-  3: ['A theorem is a claim we can prove. A proof is the reasoning that shows why it is true.', 'Axioms are starting assumptions, and rules of inference connect the steps.'],
-  4: ['Rules of inference are reliable patterns for moving from facts we know to a new conclusion.', 'The next pages show five common patterns.'],
-  5: ['If one fact guarantees another, and the first fact happens, the second follows.', 'If snow means skiing and it is snowing, we can conclude that we will go skiing.'],
-  6: ['When two things are both true, either one is true on its own.', 'So if it is freezing and raining, we can safely say it is freezing.'],
+  3: ['A theorem is a claim. A proof shows why it follows from justified steps.', 'Axioms, hypotheses, and known theorems supply facts; valid rules connect them.'],
+  4: ['These five patterns move from given premises to a justified conclusion.', 'Tap a card to inspect its symbolic rule and a short example.'],
+  5: ['If p guarantees q and p happens, q follows.', 'If rain means a wet road and it is raining, the road is wet.'],
+  6: ['When two things are both true, either one is true on its own.', 'If it is cold and raining, we may conclude that it is cold.'],
   7: ['If p implies q and q is false, then p must be false.', 'An angle that is not ninety degrees cannot be a right angle.'],
-  8: ['Think of this as linking two if-then statements.', 'If studying leads to passing, and passing leads to a good grade, studying leads to a good grade.'],
-  9: ['There are two possibilities here. If one is ruled out, the other is left.', 'If the order was pizza or a burger, and it was not pizza, it must have been a burger.'],
+  8: ['Link two if-then statements through their shared middle statement.', 'If studying leads to passing, and passing leads to credit, studying leads to credit.'],
+  9: ['There are two possibilities here. If one is ruled out, the other is left.', 'If the order is pizza or a burger, and it is not pizza, it must be a burger.'],
   10: ['A fallacy is reasoning that looks convincing but does not actually prove the claim.', 'Getting a result does not always tell us its cause, and a proof cannot assume its own answer.'],
-  11: ['To prove an if-then claim directly, start by assuming the if part and work toward the then part.', 'The claim only fails when the first part is true and the second part is false.'],
+  11: ['To prove p implies q directly, assume p and use justified steps to reach q.', 'The truth table has exactly one false case: p true and q false.'],
   12: ['These are three ways to show an if-then claim holds.', 'The result may always be true, the starting condition may be impossible, or we can build a direct chain of reasoning.'],
   13: ['We start with a number divisible by six, so it is six times some integer.', 'Since six contains a factor of three, that number must also be divisible by three.'],
-  14: ['This is your space to try a proof or draw an example.', 'Start with what you know, then justify each step toward your conclusion.'],
+  14: ['Try this mini-proof: if 8 divides x, show that 4 divides x.', 'Write x as 8 times an integer, then look for a factor of four.'],
   15: ['Choose an answer for each question, then check your work.', 'Review the feedback after you submit, and retry any question you missed.'],
-  16: ['A good proof is a chain where every step has a reason.', 'Choose a method that fits the claim, and check that no step relies on a fallacy.'],
+  16: ['A proof moves from given facts through justified steps to a conclusion.', 'Use valid rules and check for wrong turns such as circular reasoning.'],
   17: ['That is the end of our proof journey. Thanks for listening!', 'If you have a question, we can go back to any slide and explain it again.']
 };
 
@@ -363,7 +364,7 @@ function visiblePen() {
 }
 
 async function runCatRoute(token) {
-  while (token === catRouteToken && !document.hidden && !reducedMotion.matches) {
+  while (token === catRouteToken && catMovementAllowed() && !document.hidden && !reducedMotion.matches) {
     const place = catGeometry();
     await catPause(1600);
     if (token !== catRouteToken) return;
@@ -407,7 +408,7 @@ function startCat() {
   catActor.style.transform = `translate3d(${catPosition.x}px,${catPosition.y}px,0)`;
   catActor.dataset.safeWalk = 'false';
   setCatPose('sitting');
-  if (!reducedMotion.matches && !focusMode && !catNarrationActive && !document.hidden) runCatRoute(token);
+  if (catMovementAllowed() && !reducedMotion.matches && !focusMode && !catNarrationActive && !document.hidden) runCatRoute(token);
 }
 
 function updateExplainButton() {
@@ -754,7 +755,7 @@ function stopCatNarration(completed = false) {
   setCatPose('sitting');
   updateExplainButton();
   const routeToken = ++catRouteToken;
-  if (!reducedMotion.matches && !focusMode && !document.hidden) runCatRoute(routeToken);
+  if (catMovementAllowed() && !reducedMotion.matches && !focusMode && !document.hidden) runCatRoute(routeToken);
   scheduleCatJoke();
 }
 
@@ -982,6 +983,7 @@ function goTo(index) {
     if (next === finaleSlide) startFinale();
     stage.classList.remove('is-flipping', 'chapter-shift', 'chapter-pan-left', 'chapter-pan-right');
     busy = false;
+    startCat();
   }, duration);
   setTimeout(() => next.classList.remove('is-arriving'), reducedMotion.matches ? 1 : duration + 300);
   if (!reducedMotion.matches) setTimeout(() => next.classList.remove('is-settling'), duration + 280);
@@ -1252,10 +1254,10 @@ document.getElementById('previousStep').addEventListener('click', () => setProof
 document.getElementById('nextStep').addEventListener('click', () => setProofVisible(visibleProofSteps + 1));
 document.getElementById('showAllSteps').addEventListener('click', () => setProofVisible(proofSteps.length));
 proofSteps.forEach((step, index) => step.addEventListener('click', () => setProofVisible(index + 1)));
-setProofVisible(0);
+setProofVisible(1);
 
 const challengeForm = document.getElementById('challengeForm');
-const challengeAnswers = { q1: ['b', 'Either part of an AND statement follows separately.'], q2: ['b', 'Modus Tollens concludes ¬p from p → q and ¬q.'], q3: ['b', 'Assuming the conclusion is circular reasoning.'] };
+const challengeAnswers = { q1: ['b', 'From p ∧ q, both p and q are true; either may be stated alone.'], q2: ['b', 'Modus Tollens concludes ¬p from p → q and ¬q.'], q3: ['b', 'Using the conclusion as its own reason is circular reasoning.'] };
 challengeForm.addEventListener('submit', event => {
   event.preventDefault();
   let score = 0;

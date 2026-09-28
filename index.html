@@ -13,7 +13,7 @@
     <header class="topbar">
       <div class="brand"><strong>Methods of Proof</strong><span>Group 3</span></div>
       <div class="top-actions">
-        <div class="utilities"><button class="icon-btn" id="utilitiesButton" type="button" aria-label="Open presentation tools" aria-expanded="false" aria-controls="utilitiesMenu">☰</button><div class="utilities-menu" id="utilitiesMenu" hidden><button type="button" data-panel="symbols">Symbol guide</button><button type="button" data-panel="keyboard">Keyboard help</button><button type="button" id="focusButton" aria-pressed="false">Focus mode: Off</button><label>Cat jokes <input id="catJokesToggle" type="checkbox" checked></label><label>Voice narration <input id="catVoiceToggle" type="checkbox"></label><p id="voiceAvailability">Voice depends on browser voices; captions always work.</p><button type="button" id="printButton">Print / Save as PDF</button></div></div>
+        <div class="utilities"><button class="icon-btn" id="utilitiesButton" type="button" aria-label="Open presentation tools" aria-expanded="false" aria-controls="utilitiesMenu">☰</button><div class="utilities-menu" id="utilitiesMenu" hidden><button type="button" data-panel="symbols">Symbol guide</button><button type="button" data-panel="keyboard">Keyboard help</button><button type="button" id="focusButton" aria-pressed="false">Focus mode: Off</button><label>Cat jokes <input id="catJokesToggle" type="checkbox"></label><label>Voice narration <input id="catVoiceToggle" type="checkbox"></label><p id="voiceAvailability">Voice depends on browser voices; captions always work.</p><button type="button" id="printButton">Print / Save as PDF</button></div></div>
         <button class="icon-btn" id="overviewButton" type="button" title="Show all slides" aria-label="Show all slides">▦</button>
         <button class="icon-btn" id="fullscreenButton" type="button" title="Fullscreen" aria-label="Fullscreen">⛶</button>
       </div>
@@ -30,7 +30,7 @@
           <div class="tape" aria-hidden="true"></div><div class="bookmark" aria-hidden="true"></div>
           <img class="pen" src="assets/pen.png" alt="">
           <div class="cover-formulas" aria-hidden="true"><span>∀x</span><span>p → q</span><span>∴</span><span>∃n</span><span>√x</span></div>
-          <div class="content"><p class="cover-kicker">MATHEMATICS / GROUP 3</p><h1 class="script">Methods of<br>Proof</h1><svg class="title-stroke" viewBox="0 0 420 26" preserveAspectRatio="none" aria-hidden="true"><path d="M4 17 C110 11 210 14 316 11 S392 13 416 8"/></svg><div class="ticket">Group 3</div><p class="learning-goals">Today: recognize valid rules, spot fallacies, and follow a direct proof.</p></div>
+          <div class="content"><p class="cover-kicker">MATHEMATICS / GROUP 3</p><h1 class="script">Methods of<br>Proof</h1><svg class="title-stroke" viewBox="0 0 420 26" preserveAspectRatio="none" aria-hidden="true"><path d="M4 17 C110 11 210 14 316 11 S392 13 416 8"/></svg><div class="ticket">Group 3</div><div class="learning-goals"><strong>Today we will</strong><span>✓ Recognize valid reasoning</span><span>✓ Spot common fallacies</span><span>✓ Build a direct proof</span></div></div>
         </section>
 
         <section class="slide team" data-title="Our Team" aria-label="Slide 2: Our Team">
@@ -59,36 +59,38 @@
         <section class="slide foundations" data-title="Foundations" aria-label="Slide 3: The Foundations of a Mathematical System">
           <span class="star star-a" aria-hidden="true"></span><span class="star star-b" aria-hidden="true"></span>
           <div class="content">
-            <h1 class="script">The Foundations of a Mathematical System</h1>
-            <div class="definition-list">
-              <button class="paper-strip" type="button">A theorem is a statement that can be shown to be true.</button>
-              <button class="paper-strip" type="button">A proof is a sequence of statements that demonstrates that a theorem is true.</button>
-              <button class="paper-strip" type="button">Axioms or postulates are the underlying assumptions about mathematical structures.</button>
-              <button class="paper-strip" type="button">Proofs may include axioms, hypotheses, and previously proved theorems.</button>
-              <button class="paper-strip" type="button">Rules of inference draw conclusions from other assertions and tie a proof together.</button>
-              <button class="paper-strip" type="button">Fallacies are common forms of incorrect reasoning.</button>
+            <h1 class="script">Building Blocks of a Proof</h1>
+            <p class="teaching-lead">A theorem is a claim. A proof shows why the claim follows.</p>
+            <div class="definition-list foundation-flow" aria-label="How a theorem is proved">
+              <button class="paper-strip" type="button" aria-pressed="false"><strong>Start</strong><span>Axioms and postulates</span><small>Accepted starting assumptions</small></button>
+              <button class="paper-strip" type="button" aria-pressed="false"><strong>Use</strong><span>Hypotheses and known theorems</span><small>What this problem gives us</small></button>
+              <button class="paper-strip" type="button" aria-pressed="false"><strong>Connect</strong><span>Rules of inference</span><small>Valid moves between statements</small></button>
+              <button class="paper-strip" type="button" aria-pressed="false"><strong>Build</strong><span>A proof</span><small>Each step has a reason</small></button>
+              <button class="paper-strip" type="button" aria-pressed="false"><strong>Reach</strong><span>A theorem</span><small>The justified conclusion</small></button>
             </div>
+            <p class="fallacy-callout"><span aria-hidden="true">✕</span> A fallacy looks like a valid step but does not justify its conclusion.</p>
           </div>
         </section>
 
         <section class="slide rules-menu" data-title="Rules of Inference" aria-label="Slide 4: Rules of Inference">
           <span class="star star-a" aria-hidden="true"></span><span class="star star-b" aria-hidden="true"></span><span class="star star-c" aria-hidden="true"></span>
-          <div class="content"><h1 class="script center">Rules of Inference</h1><p class="premise-note">In everyday examples, treat each “if … then …” sentence as an assumed premise.</p>
+          <div class="content"><h1 class="script center">Five Valid Moves</h1><p class="premise-note">Each card is a shortcut from given premises to a justified conclusion.</p>
             <div class="rules-list">
-              <button class="rule-link" type="button" data-go="5">Modus Ponens <span class="arrow">→</span></button>
-              <button class="rule-link" type="button" data-go="6">Simplification <span class="arrow">→</span></button>
-              <button class="rule-link" type="button" data-go="7">Modus Tollens <span class="arrow">→</span></button>
-              <button class="rule-link" type="button" data-go="8">Hypothetical Syllogism <span class="arrow">→</span></button>
-              <button class="rule-link" type="button" data-go="9">Disjunctive Syllogism <span class="arrow">→</span></button>
+              <button class="rule-link" type="button" data-go="5"><strong>Modus Ponens</strong><span>p → q, p <b>∴ q</b></span></button>
+              <button class="rule-link" type="button" data-go="6"><strong>Simplification</strong><span>p ∧ q <b>∴ p</b></span></button>
+              <button class="rule-link" type="button" data-go="7"><strong>Modus Tollens</strong><span>p → q, ¬q <b>∴ ¬p</b></span></button>
+              <button class="rule-link" type="button" data-go="8"><strong>Hypothetical Syllogism</strong><span>p → q, q → r <b>∴ p → r</b></span></button>
+              <button class="rule-link" type="button" data-go="9"><strong>Disjunctive Syllogism</strong><span>p ∨ q, ¬p <b>∴ q</b></span></button>
             </div>
+            <p class="roadmap-note">Tap any card to jump to that rule.</p>
           </div>
         </section>
 
         <section class="slide rule-page" data-title="Modus Ponens" aria-label="Slide 5: Modus Ponens">
           <span class="star star-c" aria-hidden="true"></span>
-          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Modus Ponens or Law of Detachment</h2>
-            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p</span><span>p → q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">q</div></div>
-              <div class="rule-example"><p>When an implication and its hypothesis are true, its conclusion follows.</p><p class="example-title">Example</p><p>“If it snows today, then we will go skiing.”</p><p>“It is snowing today.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, “We will go skiing.”</div></div>
+          <div class="content"><h1 class="script">Rules of Inference</h1><h2>Modus Ponens <small>Law of Detachment</small></h2>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Symbolic rule</p><div class="premise"><span><small>Premise 1</small>p → q</span><span><small>Premise 2</small>p</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">∴ q</div></div>
+              <div class="rule-example"><p class="example-title">Assumed premises</p><div class="rule-flow"><div class="flow-input">If it rains, the road is wet.</div><div class="flow-input">It is raining.</div></div><p class="rule-question">What follows? <span aria-hidden="true">↓</span></p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>∴ The road is wet.</div><p class="rule-takeaway">The starting condition holds, so its result follows.</p></div>
             </div>
           </div>
         </section>
@@ -96,8 +98,8 @@
         <section class="slide rule-page" data-title="Simplification" aria-label="Slide 6: Simplification">
           <span class="star star-c" aria-hidden="true"></span>
           <div class="content"><h1 class="script">Rules of Inference</h1><h2>Simplification</h2>
-            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p ∧ q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">p</div></div>
-              <div class="rule-example"><p>From a statement joined by “and,” either part may be inferred.</p><p class="example-title">Example</p><p>“It is below freezing and raining now.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, “It is below freezing now.”</div></div>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Symbolic rule</p><div class="premise"><span><small>Premise</small>p ∧ q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">∴ p</div></div>
+              <div class="rule-example"><p class="example-title">Assumed premise</p><div class="rule-flow"><div class="flow-input">It is cold <strong>and</strong> raining.</div></div><p class="rule-question">Name one part. <span aria-hidden="true">↓</span></p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>∴ It is cold.</div><p class="rule-takeaway">When both parts hold, either part holds alone.</p></div>
             </div>
           </div>
         </section>
@@ -105,8 +107,8 @@
         <section class="slide rule-page" data-title="Modus Tollens" aria-label="Slide 7: Modus Tollens">
           <span class="star star-c" aria-hidden="true"></span>
           <div class="content"><h1 class="script">Rules of Inference</h1><h2>Modus Tollens</h2>
-            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p → q</span><span>¬q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">¬p</div></div>
-              <div class="rule-example"><p>If the promised result does not hold, the hypothesis cannot hold.</p><p class="example-title">Example</p><p>“If an angle is right, then its measure is 90°.”</p><p>“This angle's measure is not 90°.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, the angle is not a right angle.</div></div>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Symbolic rule</p><div class="premise"><span><small>Premise 1</small>p → q</span><span><small>Premise 2</small>¬q</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">∴ ¬p</div></div>
+              <div class="rule-example"><p class="example-title">Assumed premises</p><div class="rule-flow"><div class="flow-input">If an angle is right, it measures 90°.</div><div class="flow-input">This angle does <strong>not</strong> measure 90°.</div></div><p class="rule-question">What follows? <span aria-hidden="true">↓</span></p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>∴ This angle is not a right angle.</div><p class="rule-takeaway">No required result means no starting condition.</p></div>
             </div>
           </div>
         </section>
@@ -114,8 +116,8 @@
         <section class="slide rule-page" data-title="Hypothetical Syllogism" aria-label="Slide 8: Hypothetical Syllogism">
           <span class="star star-c" aria-hidden="true"></span>
           <div class="content"><h1 class="script">Rules of Inference</h1><h2>Hypothetical Syllogism</h2>
-            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p → q</span><span>q → r</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">p → r</div></div>
-              <div class="rule-example"><p>Two implications can be chained through a shared statement.</p><p class="example-title">Example</p><p>“If you study hard, then you will pass the exam.”</p><p>“If you pass the exam, then you will get a good grade.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, if you study hard, you will get a good grade.</div></div>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Symbolic rule</p><div class="premise"><span><small>Premise 1</small>p → q</span><span><small>Premise 2</small>q → r</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">∴ p → r</div></div>
+              <div class="rule-example"><p class="example-title">Assumed premises</p><div class="rule-flow"><div class="flow-input">If you study, you pass.</div><div class="flow-input">If you pass, you earn credit.</div></div><p class="rule-question">Link the chain. <span aria-hidden="true">↓</span></p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>∴ If you study, you earn credit.</div><p class="rule-takeaway">The shared middle statement connects the two rules.</p></div>
             </div>
           </div>
         </section>
@@ -123,40 +125,41 @@
         <section class="slide rule-page" data-title="Disjunctive Syllogism" aria-label="Slide 9: Disjunctive Syllogism">
           <span class="star star-c" aria-hidden="true"></span>
           <div class="content"><h1 class="script">Rules of Inference</h1><h2>Disjunctive Syllogism</h2>
-            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Form</p><div class="premise"><span>p ∨ q</span><span>¬p</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">q</div></div>
-              <div class="rule-example"><p>When one of two possibilities is ruled out, the other remains.</p><p class="example-title">Assumed premises</p><p>“I ordered a pizza or a burger.”</p><p>“I did not order pizza.”</p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>Therefore, “I ordered a burger.”</div></div>
+            <div class="rule-columns"><div class="rule-formula"><p class="eyebrow">Symbolic rule</p><div class="premise"><span><small>Premise 1</small>p ∨ q</span><span><small>Premise 2</small>¬p</span></div><div class="formula-rule"></div><span class="conclusion-label">Therefore</span><div class="conclusion-symbol">∴ q</div></div>
+              <div class="rule-example"><p class="example-title">Assumed premises</p><div class="rule-flow"><div class="flow-input">The order is pizza <strong>or</strong> a burger.</div><div class="flow-input">The order is <strong>not</strong> pizza.</div></div><p class="rule-question">What remains? <span aria-hidden="true">↓</span></p><button class="action-btn" type="button" data-reveal aria-expanded="false">Show conclusion</button><div class="answer" hidden>∴ The order is a burger.</div><p class="rule-takeaway">Remove one option; the other must hold.</p></div>
             </div>
           </div>
         </section>
 
         <section class="slide fallacies" data-title="Fallacies" aria-label="Slide 10: Fallacies">
           <span class="star star-c" aria-hidden="true"></span>
-          <div class="content"><h1 class="script">Fallacies</h1>
+          <div class="content"><h1 class="script">Looks Valid. Isn't.</h1><p class="teaching-lead">Use the same rain example to spot two wrong turns.</p>
             <div class="fallacy-list">
-              <details><summary>1. Affirming the consequent (affirming the conclusion)</summary><p>From p → q and q, it does not follow that p. <span class="counterexample">A sprinkler can wet the road without rain.</span></p></details>
-              <details><summary>2. Denying the antecedent (denying the hypothesis)</summary><p>From p → q and ¬p, it does not follow that ¬q. <span class="counterexample">No rain does not mean a dry road; a sprinkler may be on.</span></p></details>
-              <details><summary>3. Begging the Question</summary><p>Circular reasoning uses the truth of the very statement a proof is trying to establish.</p></details>
+              <details open><summary>1. Affirming the consequent</summary><div class="fallacy-form">p → q <span>+</span> q <span class="wrong-step">✕ ∴ p</span></div><p>Wet road does not prove rain. <strong>A sprinkler could have made it wet.</strong></p></details>
+              <details open><summary>2. Denying the antecedent</summary><div class="fallacy-form">p → q <span>+</span> ¬p <span class="wrong-step">✕ ∴ ¬q</span></div><p>No rain does not prove a dry road. <strong>The sprinkler may still be on.</strong></p></details>
+              <details open><summary>3. Begging the question</summary><div class="fallacy-form circular-form"><span>Claim</span><span aria-hidden="true">↻</span><span>Same claim as “proof”</span></div><p>The conclusion is used to justify itself.</p></details>
             </div>
           </div>
         </section>
 
         <section class="slide implication" data-title="Proof of an Implication" aria-label="Slide 11: Methods of Proof of an Implication">
           <div class="bookmark" aria-hidden="true"></div>
-          <div class="content"><h1 class="script">Methods of Proof of an Implication</h1>
+          <div class="content"><h1 class="script">When Is p → q False?</h1>
             <div class="implication-layout"><div class="implication-copy">
-              <p>Many mathematical problems take the form <strong>“If p, then q.”</strong> We write this as <strong>p → q</strong>.</p>
-              <p>To prove it directly, assume p is true and show that q follows.</p>
-              <p>When p is false, the implication is true regardless of q. Try the truth values to see the one case that makes p → q false.</p>
-            </div><div class="truth-box"><h2>p → q</h2><div class="truth-switches"><button type="button" data-truth="p" aria-pressed="true">p: True</button><button type="button" data-truth="q" aria-pressed="true">q: True</button></div><div class="truth-result" id="truthResult" aria-live="polite">Implication: True</div><button class="text-button" id="truthTableButton" type="button" aria-expanded="false" aria-controls="truthTable">Show truth table</button><table class="truth-table" id="truthTable" hidden><caption>Implication truth values</caption><thead><tr><th>p</th><th>q</th><th>p → q</th></tr></thead><tbody><tr data-p="true" data-q="true"><td>T</td><td>T</td><td>T</td></tr><tr data-p="true" data-q="false"><td>T</td><td>F</td><td>F</td></tr><tr data-p="false" data-q="true"><td>F</td><td>T</td><td>T</td></tr><tr data-p="false" data-q="false"><td>F</td><td>F</td><td>T</td></tr></tbody></table></div></div>
+              <p><strong>Direct proof</strong> starts by assuming p.</p>
+              <p>Use definitions and known facts until you reach q.</p>
+              <div class="direct-flow" aria-label="Direct proof flow"><span>Assume p</span><span aria-hidden="true">↓</span><span>Justified steps</span><span aria-hidden="true">↓</span><span>Reach q</span><span aria-hidden="true">↓</span><strong>p → q proved</strong></div>
+              <p class="implication-note">Only <strong>p true, q false</strong> breaks the promise.</p>
+            </div><div class="truth-box"><h2>Try the truth values</h2><div class="truth-switches"><button type="button" data-truth="p" aria-pressed="true">p: True</button><button type="button" data-truth="q" aria-pressed="true">q: True</button></div><div class="truth-result" id="truthResult" aria-live="polite">Implication: True</div><button class="text-button" id="truthTableButton" type="button" aria-expanded="true" aria-controls="truthTable">Hide truth table</button><table class="truth-table" id="truthTable"><caption>The only false case is highlighted</caption><thead><tr><th>p</th><th>q</th><th>p → q</th></tr></thead><tbody><tr data-p="true" data-q="true"><td>T</td><td>T</td><td>T</td></tr><tr class="critical" data-p="true" data-q="false"><td>T</td><td>F</td><td>F</td></tr><tr data-p="false" data-q="true"><td>F</td><td>T</td><td>T</td></tr><tr data-p="false" data-q="false"><td>F</td><td>F</td><td>T</td></tr></tbody></table></div></div>
           </div>
         </section>
 
         <section class="slide types" data-title="Types of Proof" aria-label="Slide 12: Types of Proof">
           <div class="content"><h1 class="script center">Types of Proof</h1>
             <div class="type-grid">
-              <details class="proof-type" open><summary><span class="number">1</span>Trivial Proof</summary><p>Over the integers: “If n is odd, then n² ≥ 0.” The conclusion holds for every integer, so the implication is true.</p></details>
-              <details class="proof-type" open><summary><span class="number">2</span>Vacuous Proof</summary><p>Over the integers: “If n² &lt; 0, then n is odd.” No integer has a negative square, so the hypothesis never holds.</p></details>
-              <details class="proof-type" open><summary><span class="number">3</span>Direct Proof</summary><p>Assume p and build a logical chain: p → statement 1 → statement 2 → … → q.</p></details>
+              <details class="proof-type" open><summary><span class="number">1</span>Trivial Proof</summary><div class="type-symbol">q is always true</div><p><strong>Example:</strong> If n is odd, then n² ≥ 0. The result always holds.</p></details>
+              <details class="proof-type" open><summary><span class="number">2</span>Vacuous Proof</summary><div class="type-symbol">p can never be true</div><p><strong>Example:</strong> If n² &lt; 0, then n is odd. No integer meets the condition.</p></details>
+              <details class="proof-type" open><summary><span class="number">3</span>Direct Proof</summary><div class="type-symbol">assume p → steps → q</div><p><strong>Example:</strong> From 6 | x, write x = 6k and reach 3 | x.</p></details>
             </div>
           </div>
         </section>
@@ -166,18 +169,19 @@
           <div class="content"><div class="tape-title">For every integer x, if 6 divides x, then 3 divides x.</div>
             <div class="proof-controls"><button type="button" id="previousStep">Previous step</button><button type="button" id="nextStep">Next step</button><button type="button" id="showAllSteps">Show all</button><span id="stepCount" aria-live="polite">0 / 5 steps</span></div>
             <div class="worked-grid"><div class="worked-steps" id="workedSteps">
-              <button class="proof-step" type="button" data-explain="Since 6 divides x, x = 6k for some integer k."><span class="step-equation">x = 6k</span><span class="step-reason">Definition of divisibility; k is an integer.</span></button>
-              <button class="proof-step" type="button" data-explain="Factor 6 as 2 × 3."><span class="step-equation">x = (2 × 3)k</span><span class="step-reason">Factor 6.</span></button>
-              <button class="proof-step" type="button" data-explain="Regroup the integer factors."><span class="step-equation">x = 3(2k)</span><span class="step-reason">Associative and commutative laws.</span></button>
-              <button class="proof-step" type="button" data-explain="Let m = 2k. Since k is an integer, m is an integer."><span class="step-equation">m = 2k; x = 3m</span><span class="step-reason">Closure of integers under multiplication.</span></button>
-              <button class="proof-step" type="button" data-explain="Since x = 3m for an integer m, 3 divides x."><span class="step-equation">Therefore, 3 divides x. ∎</span><span class="step-reason">Definition of divisibility.</span></button>
-            </div><div class="worked-note"><strong>Why this step works</strong><p id="stepExplanation">Choose Next step to begin the proof.</p></div></div>
+              <div class="proof-start"><small>Given</small><strong>6 | x</strong><span>x is an integer</span></div>
+              <button class="proof-step" type="button" data-explain="6 | x means x = 6k for some integer k."><span class="step-equation">x = 6k</span><span class="step-reason">What changed: rewrite “divides.” Why: definition of divisibility.</span></button>
+              <button class="proof-step" type="button" data-explain="Replace 6 with its factors 2 × 3."><span class="step-equation">x = (2 · 3)k</span><span class="step-reason">What changed: factor 6. Why: 6 = 2 · 3.</span></button>
+              <button class="proof-step" type="button" data-explain="Rearrange the integer factors to put 3 in front."><span class="step-equation">x = 3(2k)</span><span class="step-reason">What changed: regroup factors. Why: multiplication laws.</span></button>
+              <button class="proof-step" type="button" data-explain="Set m = 2k. Since k is an integer, m is also an integer."><span class="step-equation">m = 2k ∈ ℤ; x = 3m</span><span class="step-reason">What changed: name 2k. Why: integers are closed under multiplication.</span></button>
+              <button class="proof-step" type="button" data-explain="x = 3m for an integer m is exactly what 3 | x means."><span class="step-equation">∴ 3 | x ∎</span><span class="step-reason">What changed: state the result. Why: definition of divisibility.</span></button>
+            </div><div class="worked-note"><strong>Key insight</strong><p class="proof-insight">Every multiple of 6 already contains a factor of 3.</p><strong>Why this step works</strong><p id="stepExplanation">Choose Next step to begin the proof.</p></div></div>
           </div>
         </section>
 
-        <section class="slide blank" data-title="Scratch Space" aria-label="Slide 14: Scratch Space">
+        <section class="slide blank" data-title="Your Turn" aria-label="Slide 14: Your Turn — Mini-Proof">
           <img class="pen" src="assets/pen.png" alt=""><span class="star star-c" aria-hidden="true"></span>
-          <div class="scratch-heading"><h1>Scratch Space</h1><p>Try a proof, draw an example, or explain your reasoning.</p></div>
+          <div class="scratch-heading"><h1>Your Turn: Mini-Proof</h1><p>If 8 | x, can you show that 4 | x? Start with 8 | x and justify each step.</p></div>
           <canvas class="doodle" id="doodle" aria-label="Drawing canvas"></canvas><div class="doodle-controls"><button id="undoDoodle" type="button" disabled>Undo</button><button id="clearDoodle" type="button" disabled>Clear drawing</button></div>
         </section>
 
@@ -185,9 +189,9 @@
           <span class="star star-a" aria-hidden="true"></span>
           <div class="content"><h1 class="script">Challenges</h1>
             <form class="challenge-list" id="challengeForm">
-              <fieldset class="challenge-question"><legend>1. It is raining and cold. What follows by simplification?</legend><label><input type="radio" name="q1" value="a"> Only the raining statement</label><label><input type="radio" name="q1" value="b"> Either statement separately</label><label><input type="radio" name="q1" value="c"> Neither statement</label><p class="challenge-feedback" data-feedback="q1" hidden></p><p class="print-answer">Answer: Either statement separately.</p></fieldset>
-              <fieldset class="challenge-question"><legend>2. If p → q and ¬q, what can you conclude?</legend><label><input type="radio" name="q2" value="a"> p</label><label><input type="radio" name="q2" value="b"> ¬p</label><label><input type="radio" name="q2" value="c"> q</label><p class="challenge-feedback" data-feedback="q2" hidden></p><p class="print-answer">Answer: ¬p, by Modus Tollens.</p></fieldset>
-              <fieldset class="challenge-question"><legend>3. Is a proof valid if it assumes its own conclusion?</legend><label><input type="radio" name="q3" value="a"> Yes</label><label><input type="radio" name="q3" value="b"> No</label><p class="challenge-feedback" data-feedback="q3" hidden></p><p class="print-answer">Answer: No; that is circular reasoning.</p></fieldset>
+              <fieldset class="challenge-question"><legend><span class="question-tag">Simplification</span>1. Given “raining and cold,” what may we infer?</legend><label><input type="radio" name="q1" value="a"> Neither fact alone</label><label><input type="radio" name="q1" value="b"> Either fact separately</label><label><input type="radio" name="q1" value="c"> It must be sunny</label><p class="challenge-feedback" data-feedback="q1" hidden></p><p class="print-answer">Answer: Either fact separately.</p></fieldset>
+              <fieldset class="challenge-question"><legend><span class="question-tag">Modus Tollens</span>2. If p → q and ¬q, what follows?</legend><label><input type="radio" name="q2" value="a"> p</label><label><input type="radio" name="q2" value="b"> ¬p</label><label><input type="radio" name="q2" value="c"> q</label><p class="challenge-feedback" data-feedback="q2" hidden></p><p class="print-answer">Answer: ¬p, by Modus Tollens.</p></fieldset>
+              <fieldset class="challenge-question"><legend><span class="question-tag">Fallacy</span>3. Can a proof assume its own conclusion?</legend><label><input type="radio" name="q3" value="a"> Yes</label><label><input type="radio" name="q3" value="b"> No</label><p class="challenge-feedback" data-feedback="q3" hidden></p><p class="print-answer">Answer: No; that is circular reasoning.</p></fieldset>
               <div class="challenge-actions"><button class="action-btn" type="submit">Check answers</button><button class="action-btn secondary" type="reset">Retry / reset</button><strong id="challengeScore" aria-live="polite"></strong></div>
             </form>
           </div>
@@ -197,10 +201,11 @@
           <span class="star star-a" aria-hidden="true"></span><span class="star star-b" aria-hidden="true"></span>
           <div class="content"><h1 class="script">Conclusion</h1>
             <ul class="conclusion-list">
-              <li>A mathematical proof is a chain of justified statements leading to a conclusion.</li>
-              <li>Rules of inference preserve valid reasoning; fallacies only imitate it.</li>
-              <li>For p → q, choose a proof method that fits the hypothesis and the conclusion.</li>
+              <li><strong>Proof path</strong><div class="conclusion-flow">Given facts <span>→</span> justified steps <span>→</span> conclusion</div></li>
+              <li><strong>Valid moves</strong><p>✓ Modus Ponens · Simplification · Modus Tollens<br>✓ Hypothetical · Disjunctive Syllogism</p></li>
+              <li><strong>Watch for wrong turns</strong><p>✕ Affirming the consequent · Denying the antecedent<br>✕ Circular reasoning</p></li>
             </ul>
+            <p class="final-takeaway">A proof is a justified path to the answer. ∎</p>
           </div>
         </section>
 
