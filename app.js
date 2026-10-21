@@ -1,6 +1,8 @@
 const el = id => document.getElementById(id);
 let stream = null;
 let photoURL = null;
+let photoBlob = null;
+let sending = false;
 let requestVersion = 0;
 function status(message) { el('status').textContent = message; }
 function stopCamera() {
@@ -15,6 +17,12 @@ function stopCamera() {
 function deletePhoto() {
   if (photoURL) URL.revokeObjectURL(photoURL);
   photoURL = null;
+  photoBlob = null;
+  el('sharing').hidden = true;
+  el('consent').checked = false;
+  el('send').disabled = true;
+  el('consent').disabled = false;
+  el('shareStatus').textContent = 'Optional. Nothing is sent automatically.';
   el('photo').removeAttribute('src');
   el('download').removeAttribute('href');
   ['photo', 'download', 'retake', 'clear'].forEach(id => el(id).hidden = true);
@@ -56,7 +64,9 @@ el('capture').onclick = () => {
   canvas.toBlob(blob => {
     el('capture').disabled = false;
     if (!blob) { status('Photo could not be created. Please try again.'); return; }
+    photoBlob = blob;
     photoURL = URL.createObjectURL(blob);
+    el('sharing').hidden = false;
     el('photo').src = photoURL; el('download').href = photoURL;
     stopCamera();
     ['photo','download','retake','clear'].forEach(id => el(id).hidden = false);
@@ -69,3 +79,31 @@ el('clear').onclick = () => { deletePhoto(); status('Photo deleted from this pag
 el('retake').onclick = () => { deletePhoto(); el('enable').click(); };
 window.addEventListener('pagehide', () => { stopCamera(); deletePhoto(); });
 document.addEventListener('visibilitychange', () => { if (document.hidden && stream) { stopCamera(); status('Camera paused because you left this tab. Enable it to continue.'); } });
+
+el('consent').onchange = () => { el('send').disabled = !el('consent').checked || sending || !photoBlob; };
+el('send').onclick = async () => {
+  if (!photoBlob || !el('consent').checked || sending) return;
+  sending = true;
+  ['send', 'consent', 'retake', 'clear'].forEach(id => el(id).disabled = true);
+  el('shareStatus').textContent = 'Sending this photo to Discord…';
+  try {
+    const response = await fetch('api/share-photo', {
+      method: 'POST', headers: {'Content-Type': 'image/png', 'X-Photo-Consent': 'send-to-discord'}, body: photoBlob
+    });
+    if (!response.ok) {
+      if (response.status === 503 || response.status === 404 || response.status === 501) throw new Error('Sharing is not configured on this server. You can still download your photo.');
+      if (response.status === 413) throw new Error('This photo is too large to send. You can download it instead.');
+      if (response.status === 429) throw new Error('Please wait before trying to share again.');
+      throw new Error('Discord did not confirm delivery. Please check the channel before retrying to avoid duplicate photos.');
+    }
+    el('shareStatus').textContent = 'Sent to the site owner’s Discord channel. Deleting the photo here will not remove it from Discord.';
+    el('consent').disabled = true;
+  } catch (error) {
+    el('shareStatus').textContent = error.message === 'Failed to fetch' ? 'Delivery could not be confirmed. Check the channel before retrying.' : error.message;
+    el('consent').disabled = false;
+  } finally {
+    sending = false;
+    ['retake', 'clear'].forEach(id => el(id).disabled = false);
+    el('send').disabled = el('consent').disabled || !el('consent').checked;
+  }
+};
